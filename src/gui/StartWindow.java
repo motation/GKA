@@ -55,7 +55,8 @@ public class StartWindow extends JFrame {
 						Container contentPane = StartWindow.this
 								.getContentPane();
 						graph = new FileGraphReader().loadGraph(file);
-						graphPane = new JGraph(new JGraphModelAdapter<>(graph.getGraph()));
+						graphPane = new JGraph(new JGraphModelAdapter<>(graph
+								.getGraph()));
 
 						final JGraphSimpleLayout graphLayout = new JGraphSimpleLayout(
 								JGraphSimpleLayout.TYPE_CIRCLE, 100, 100);
@@ -107,12 +108,28 @@ public class StartWindow extends JFrame {
 		file.add(save);
 
 		JMenuItem breadthFirst = new JMenuItem("Breitensuche");
-		// breadthFirst.addActionListener(new SearchFrameAction(new
-		// BreadthFirst()));
-		// algos.add(breadthFirst);
+		JMenuItem dijkstra = new JMenuItem("Dijkstra");
+		JMenuItem aStar = new JMenuItem("A*");
+
+		algos.add(breadthFirst);
+		algos.add(dijkstra);
+		algos.add(aStar);
 		menubar.add(file);
 		menubar.add(algos);
 		setJMenuBar(menubar);
+
+		dijkstra.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				JFrame frame = new AlgorithmWindow(graph, null);
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frame.setSize(768,500);
+				frame.setVisible(true);				
+			}
+
+		});
 	}
 
 	private class GkaFileFilter extends FileFilter {
@@ -125,7 +142,7 @@ public class StartWindow extends JFrame {
 
 		@Override
 		public String getDescription() {
-			return "GKA Graphen (*.gka)";
+			return "GKA Graphen (*.graph)";
 		}
 
 	}

@@ -20,5 +20,10 @@ public class Vertex extends AbstractVertex implements IVertex {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String toString(){
+		return this.getName();
+	}
 
 }

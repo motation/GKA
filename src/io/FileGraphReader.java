@@ -7,10 +7,6 @@ import java.io.IOException;
 
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.Edge;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.ListenableDirectedGraph;
-import org.jgrapht.graph.ListenableDirectedWeightedGraph;
-import org.jgrapht.util.VertexPair;
 
 import elements.AttributedVertex;
 import elements.IAttributedVertex;

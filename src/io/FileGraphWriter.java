@@ -1,14 +1,7 @@
 package io;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.ListenableDirectedWeightedGraph;
-import org.jgrapht.graph.Pseudograph;
-import org.jgrapht.graph.WeightedPseudograph;
 
 import elements.IGraph;
 
