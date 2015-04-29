@@ -151,7 +151,7 @@ public class Dikstra {
 		}
 		
 	GraphPath retunrGraphPath = new GraphPathImpl<IVertex,Edge>(searchGraph.getGraph(),endVertex,startVertx,EdgePath,weight);
-	
+	//Cause of awsome
 	return retunrGraphPath;
 	}
 }
