@@ -30,6 +30,8 @@ public class DijkstraShortestPath_  {
 	
 	public DijkstraShortestPath_(IGraph searchGraph){
 		
+		
+		this.searchGraph = searchGraph;
 		if(!(searchGraph.isWeighted())){
 			throw new IllegalArgumentException("Graph must be Weighted for Algoyrthm to Run");
 		}
@@ -42,18 +44,18 @@ public class DijkstraShortestPath_  {
 		return startVertx;
 	}
 	public void setStartVertx(IVertex startVertx) {
-		if(!(this.searchGraph.getGraph().containsVertex(startVertx))){
-			throw new IllegalArgumentException("Graph must contain start vertex");
-		}
+		//if(!(this.searchGraph.getGraph().containsVertex(startVertx))){
+			//throw new IllegalArgumentException("Graph must contain start vertex");
+		//}
 		this.startVertx = startVertx;
 	}
 	public IVertex getEndVertex() {
 		return endVertex;
 	}
 	public void setEndVertex(IVertex endVertex) {
-		if(!(this.searchGraph.getGraph().containsVertex(endVertex))){
-			throw new IllegalArgumentException("Graph must contain target Vertex");
-		}
+		//if(!(this.searchGraph.getGraph().containsVertex(endVertex))){
+		//	throw new IllegalArgumentException("Graph must contain target Vertex");
+		//}
 		this.endVertex = endVertex;
 	}
 	
@@ -124,7 +126,7 @@ public class DijkstraShortestPath_  {
 					
 		GraphPath retunrGraphPath = new GraphPathImpl<IVertex,Edge>(searchGraph.getGraph(),endVertex,startVertx,EdgePath,weight);
 		
-		return null;
+		return retunrGraphPath;
 		
 		
 		
