@@ -34,7 +34,7 @@ public class FileGraphReader {
 	// PATTERN
 	public static final String PATTERN_ATTRIBUTED = "^[a-zA-Z0-9]+:([a-zA-Z0-9]+),[a-zA-Z0-9]+:([a-zA-Z0-9]+).*?$|^[a-zA-Z0-9]+:([a-zA-Z0-9]+).*?$";
 
-	public static final String PATTERN_WEIGHTED = "^.*?::([a-zA-Z0-9]+)$";
+	public static final String PATTERN_WEIGHTED = "^.*?::([a-zA-Z0-9]+\\.?[a-zA-Z0-9]*)$";
 
 	public static final String PATTERN_GRAPH = "^([a-zA-Z0-9]+).*?,([a-zA-Z0-9]+)[:]{0,2}.*?$|^([a-zA-Z0-9]+)[:]{0,2}.*?$";
 
