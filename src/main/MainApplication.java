@@ -1,16 +1,10 @@
 package main;
 
-import elements.IGraph;
-import elements.IVertex;
 import gui.StartWindow;
 
-import java.util.List;
 import java.io.IOException;
 
 import javax.swing.JFrame;
-
-import org.jgraph.graph.Edge;
-import org.jgrapht.GraphPath;
 
 public class MainApplication {
 	public static void main(String[] args) throws IOException {

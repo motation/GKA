@@ -104,11 +104,11 @@ public class Astar {
 			
 			if(!(CL.contains(0))){
 				
-			OL.add((IAttributedVertex) tempArray.get(0).getTarget());	// alle verbunden in OL 
-			Table.get(tempArray.get(0).getTarget()).vorgeangerVertx = tempVertex; //Vorgänger ist die OL
-			Table.get(tempArray.get(0).getTarget()).t = Table.get(tempVertex).t + searchGraph.getGraph().
-			//tempArrayVertex.add((IAttributedVertex) tempArray.get(0).getTarget()); 
-			tempArray.remove(0);	
+//			OL.add((IAttributedVertex) tempArray.get(0).getTarget());	// alle verbunden in OL 
+//			Table.get(tempArray.get(0).getTarget()).vorgeangerVertx = tempVertex; //Vorgänger ist die OL
+//			Table.get(tempArray.get(0).getTarget()).t = Table.get(tempVertex).t + searchGraph.getGraph().
+//			//tempArrayVertex.add((IAttributedVertex) tempArray.get(0).getTarget()); 
+//			tempArray.remove(0);	
 			
 			}
 		}		
