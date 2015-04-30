@@ -1,12 +1,17 @@
 package graphs;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Set;
 
 import org.jgraph.graph.Edge;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.WeightedPseudograph;
 
+import elements.IAttributedVertex;
 import elements.IGraph;
 import elements.IVertex;
 import elements.WeightedEdge;
@@ -83,7 +88,29 @@ public class UndirectedAttributedWeightedGraph implements IGraph {
 
 	@Override
 	public void save(File file) {
-		// TODO Auto-generated method stub
+		String firstLine = "#weighted #attributed"+System.lineSeparator();
+//		byte[] buffer = new byte[1024];
+		try {
+			FileWriter writer = new FileWriter(file);
+			writer.write(firstLine);
+			writer.flush();
+			
+			
+			for(Edge edge : getGraph().edgeSet()){
+				WeightedEdge wEdge = (WeightedEdge) edge;
+				IAttributedVertex source = (IAttributedVertex) wEdge.getSource();
+				IAttributedVertex target = (IAttributedVertex) wEdge.getTarget();
+				String line = source.getName()+":"+source.getAttribute()+",";
+				line += target.getName()+":"+target.getAttribute()+"::"+wEdge.getWeight()+System.lineSeparator();
+				writer.write(line);
+				writer.flush();
+			}
+			writer.close();
+			
+			
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 	
