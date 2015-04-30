@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,12 +13,24 @@ import org.jgrapht.graph.GraphPathImpl;
 
 
 
+
 import elements.IAttributedVertex;
 import elements.IGraph;
 import elements.IVertex;
 
 public class Dikstra {
-	
+	class Values{
+		public double entfernung;
+		public IVertex vorgeanger;
+		public boolean ok ;
+		
+		public Values(double entfernung,IVertex vorgeanger,boolean ok){
+			this.entfernung = entfernung;
+			this.vorgeanger = vorgeanger;
+			this.ok = ok;
+		}
+		
+		}	
 	
 	public IVertex getStartVertx() {
 		return startVertx;
@@ -45,18 +58,7 @@ public class Dikstra {
 	private IGraph searchGraph;
 	private Set vertexSet = new HashSet();
 	
-	class Values{
-		public double entfernung;
-		public IVertex vorgeanger;
-		public boolean ok ;
-		
-		public Values(double entfernung,IVertex vorgeanger,boolean ok){
-			this.entfernung = entfernung;
-			this.vorgeanger = vorgeanger;
-			this.ok = ok;
-		}
-		
-		}
+
 
 	
 	public Dikstra(IGraph searchGraph, IVertex startVertx, IVertex endVertex){
@@ -64,19 +66,15 @@ public class Dikstra {
 		this.startVertx = startVertx;
 		this.endVertex = endVertex;
 		vertexSet.addAll((searchGraph.getGraph().vertexSet()));
-		//System.out.println(vertexSet.toString());
 		 Iterator iterator = vertexSet.iterator();
-		 	        //iterator.next();
+
 		 			while (iterator.hasNext()) {
-		 	        	//System.out.println(iterator.next().toString());
 		 	        	IVertex currentVertex = (IVertex) iterator.next();
-		 				
+		 	
 		 	        	if(currentVertex == this.startVertx){
 		 	        		Table.put((IVertex) currentVertex, new Values(0.0,startVertx,false));
-		 	     
 		 	        	}
 		 	        	else{
-		 	        		//System.out.println(iterator.next().toString());
 		 	        		Table.put((IVertex) currentVertex, new Values(Double.POSITIVE_INFINITY,null,false));
 		 	        	
 		 	        	}
@@ -99,16 +97,14 @@ public class Dikstra {
 	}
 	
 	public IVertex getSmalestNotVisited(){
-		Iterator iterator = vertexSet.iterator();
 		
+		Iterator iterator = vertexSet.iterator();
 		IVertex tempVertex = null;
 		double smalest = Double.POSITIVE_INFINITY;
-		//iterator.next();
+		
 		while(iterator.hasNext()){
 			IVertex currentVertex = (IVertex) iterator.next();
-//			System.out.println(Table.get(currentVertex).toString());
-		//	System.out.println(Table.get(currentVertex).ok);
-			//System.out.println(vertexSet.toString());
+			
 			if(Table.get(currentVertex).ok != true){
 				System.out.println(currentVertex.toString());
 				System.out.println(Table.get(currentVertex).entfernung);
@@ -126,17 +122,15 @@ public class Dikstra {
 	
 	public Set<IVertex> returnConnected(IVertex Center){
 		Set returnSet = new HashSet();
-		//Iterator iterator = searchGraph.getGraph().edgesOf(Center).iterator();
 		Iterator iterator = vertexSet.iterator();
-		//Iterator iterator =  searchGraph.getOutgoingEdges(Center).iterator();
+		
 		while(iterator.hasNext()){
 			IVertex currentVertex = (IVertex) iterator.next();
 			if(searchGraph.getGraph().containsEdge(Center, currentVertex)){
 				returnSet.add(currentVertex);
 			}
 		}
-		return returnSet;
-		
+		return returnSet;	
 	}
 	
 
@@ -164,19 +158,19 @@ public class Dikstra {
 	
 	public GraphPath getShortestPath(){
 		ArrayList<Edge> EdgePath = new ArrayList<Edge>();
-		double weight = Table.get(endVertex).entfernung;
+		
 		IVertex vertex1 = endVertex;
 		IVertex vertex2 = Table.get(endVertex).vorgeanger;
-		int i = 0;
-		while (vertex2 != startVertx){
-			i++;
-			System.out.println(i);
+		
+		while (vertex1 != startVertx)
+		{
 			EdgePath.add(searchGraph.getGraph().getEdge(vertex1, vertex2));
 			vertex1 = vertex2;
 			vertex2 = Table.get(vertex2).vorgeanger;
 
 		}
-		EdgePath.add(searchGraph.getGraph().getEdge(vertex1, vertex2));
+		
+		
 		System.out.println("-------------Testing begins-------------------");
 		Iterator testIT = vertexSet.iterator();
 			while(testIT.hasNext()){
@@ -188,9 +182,9 @@ public class Dikstra {
 				System.out.println("_________________");
 				System.out.println("_________________");
 			}
-		
-	GraphPath retunrGraphPath = new GraphPathImpl<IVertex,Edge>(searchGraph.getGraph(),endVertex,startVertx,EdgePath,weight);
-	//Cause of awsome
+			
+	Collections.reverse(EdgePath);
+	GraphPath retunrGraphPath = new GraphPathImpl<IVertex,Edge>(searchGraph.getGraph(),endVertex,startVertx,EdgePath,Table.get(endVertex).entfernung);
 	return retunrGraphPath;
 	}
 }

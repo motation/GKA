@@ -79,7 +79,7 @@ public class TestDijkstra {
 		dijk.getShortestPath();
 		//System.out.println(dijk.getShortestPath().toString());
 		DijkstraShortestPath dijk2 = new DijkstraShortestPath((Graph) testGraph1.getGraph(),v1,v7);	
-		assertEquals(dijk.getShortestPath(), dijk2.getPath());
+		assertEquals(dijk.getShortestPath().getEdgeList(), dijk2.getPath().getEdgeList());
 	}
 
 }
