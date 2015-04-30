@@ -1,12 +1,18 @@
 package algorthmTest;
 
 import static org.junit.Assert.*;
+
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Random;
+
 import io.FileGraphReader;
 import elements.IGraph;
 import elements.IVertex;
 import elements.Vertex;
 import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
+import graphs.creator.GraphCreator;
 
 import org.jgraph.graph.Edge;
 import org.jgrapht.Graph;
@@ -38,6 +44,7 @@ public class TestDijkstra {
 	Edge e5 = new WeightedEdge(v5,v6,5.0);
 	Edge e6 = new WeightedEdge(v6,v7,6.0);
 	Edge e7 = new WeightedEdge(v4,v5,7.0);
+	private int nextInt;
 	
 	
 	
@@ -57,29 +64,47 @@ public class TestDijkstra {
 		testGraph1.addEdge(v6, v7, e6);
 		testGraph1.addEdge(v4, v5, e7);
 
-		//Dikstra dijk = new Dikstra(testGraph1);
+		IGraph testgraph2 = GraphCreator.createUndirectedWeightedGraph(6, 10);
+		ArrayList EdgeList = new ArrayList();
+		EdgeList.addAll(testgraph2.getGraph().vertexSet());
 		
 		
-	//	dijk.setStartVertx(v1);
-		//dijk.setEndVertex(v3);
-		//dijk.calculateDijkstra();
 		
 		 
 		
 		
 	}
+	
+	public IVertex getStartVertex(ArrayList<IVertex> vertexList,int RandomNumber){
+		IVertex startVertex = vertexList.get(RandomNumber);
+		
+		return startVertex;
+	}
+	
+	public IVertex getEndVertex(ArrayList<IVertex> vertexList, int randomNumber){
+		IVertex endVertex = vertexList.get(randomNumber);
+		
+		return endVertex;		
+	}
 	@Test
 	public void test() {
 		
+		Random random = new Random();
+		IGraph testgraph2 = GraphCreator.createUndirectedWeightedGraph(6, 10);
+		ArrayList EdgeList = new ArrayList();
+		EdgeList.addAll(testgraph2.getGraph().vertexSet());
 		
-		Dikstra dijk = new Dikstra(testGraph1,v1,v7);
+		IVertex startVertex = getStartVertex(EdgeList,random.nextInt(EdgeList.size()));
+		IVertex endVertex = getEndVertex(EdgeList,random.nextInt(EdgeList.size()));
 		
-	
-		dijk.calculateDijkstra();
-		dijk.getShortestPath();
-		//System.out.println(dijk.getShortestPath().toString());
-		DijkstraShortestPath dijk2 = new DijkstraShortestPath((Graph) testGraph1.getGraph(),v1,v7);	
-		assertEquals(dijk.getShortestPath().getEdgeList(), dijk2.getPath().getEdgeList());
+		Dikstra dijk1 = new Dikstra(testgraph2);
+		
+		dijk1.setStartVertx(startVertex);
+		dijk1.setEndVertex(endVertex);
+		dijk1.calculate();
+		
+		DijkstraShortestPath dijk2 = new DijkstraShortestPath(testgraph2.getGraph(),startVertex,endVertex);	
+		assertEquals(dijk1.getShortestPath().getEdgeList(), dijk2.getPath().getEdgeList());
 	}
 
 }
