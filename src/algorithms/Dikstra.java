@@ -11,6 +11,7 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.graph.GraphPathImpl;
 
 
+
 import elements.IAttributedVertex;
 import elements.IGraph;
 import elements.IVertex;
@@ -45,9 +46,10 @@ public class Dikstra {
 	private Set vertexSet = new HashSet();
 	
 	class Values{
-		private double entfernung;
-		private IVertex vorgeanger;
-		private boolean ok ;
+		public double entfernung;
+		public IVertex vorgeanger;
+		public boolean ok ;
+		
 		public Values(double entfernung,IVertex vorgeanger,boolean ok){
 			this.entfernung = entfernung;
 			this.vorgeanger = vorgeanger;
@@ -57,25 +59,35 @@ public class Dikstra {
 		}
 
 	
-	public Dikstra(IGraph searchGraph){
+	public Dikstra(IGraph searchGraph, IVertex startVertx, IVertex endVertex){
 		this.searchGraph = searchGraph;
-		
-		vertexSet.add(searchGraph.getGraph().vertexSet());
-		
+		this.startVertx = startVertx;
+		this.endVertex = endVertex;
+		vertexSet.addAll((searchGraph.getGraph().vertexSet()));
+		//System.out.println(vertexSet.toString());
 		 Iterator iterator = vertexSet.iterator();
-		 	        while (iterator.hasNext()) {
-		 	        	if(iterator.next() == startVertx){
-		 	        		Table.put((IVertex) iterator.next(), new Values(0.0,startVertx,true));
+		 	        //iterator.next();
+		 			while (iterator.hasNext()) {
+		 	        	//System.out.println(iterator.next().toString());
+		 	        	IVertex currentVertex = (IVertex) iterator.next();
+		 				
+		 	        	if(currentVertex == this.startVertx){
+		 	        		Table.put((IVertex) currentVertex, new Values(0.0,startVertx,false));
+		 	     
 		 	        	}
 		 	        	else{
-		 	        		Table.put((IVertex) iterator.next(), new Values(Double.POSITIVE_INFINITY,null,false));
+		 	        		//System.out.println(iterator.next().toString());
+		 	        		Table.put((IVertex) currentVertex, new Values(Double.POSITIVE_INFINITY,null,false));
+		 	        	
 		 	        	}
 		 	        }
 		}
 	
 	public boolean containsFalse(){
 		 Iterator iterator = vertexSet.iterator();
+		 iterator.next();
 	        while (iterator.hasNext()) {
+
 	        	if(Table.get(iterator.next()).ok == false){
 	        		return true;
 	        	}
@@ -88,25 +100,39 @@ public class Dikstra {
 	
 	public IVertex getSmalestNotVisited(){
 		Iterator iterator = vertexSet.iterator();
+		
 		IVertex tempVertex = null;
 		double smalest = Double.POSITIVE_INFINITY;
+		//iterator.next();
 		while(iterator.hasNext()){
-			if(Table.get(iterator.next()).ok == false){
-				if(Table.get(iterator.next()).entfernung < smalest){
-					tempVertex = (IVertex) iterator.next();
-					smalest = Table.get(iterator.next()).entfernung;
+			IVertex currentVertex = (IVertex) iterator.next();
+//			System.out.println(Table.get(currentVertex).toString());
+		//	System.out.println(Table.get(currentVertex).ok);
+			//System.out.println(vertexSet.toString());
+			if(Table.get(currentVertex).ok != true){
+				System.out.println(currentVertex.toString());
+				System.out.println(Table.get(currentVertex).entfernung);
+				
+				if(Table.get(currentVertex).entfernung < smalest){
+					System.out.println("Smallter than");
+					tempVertex = currentVertex;
+					smalest = Table.get(currentVertex).entfernung;
 				}
 			}
 		}
+		System.out.println(tempVertex.toString());
 		return tempVertex;
 	}
 	
 	public Set<IVertex> returnConnected(IVertex Center){
 		Set returnSet = new HashSet();
-		Iterator iterator =  searchGraph.getOutgoingEdges(Center).iterator();
+		//Iterator iterator = searchGraph.getGraph().edgesOf(Center).iterator();
+		Iterator iterator = vertexSet.iterator();
+		//Iterator iterator =  searchGraph.getOutgoingEdges(Center).iterator();
 		while(iterator.hasNext()){
-			if(searchGraph.getGraph().containsEdge(Center, (IVertex) iterator.next())){
-				returnSet.add(iterator.next());
+			IVertex currentVertex = (IVertex) iterator.next();
+			if(searchGraph.getGraph().containsEdge(Center, currentVertex)){
+				returnSet.add(currentVertex);
 			}
 		}
 		return returnSet;
@@ -116,21 +142,21 @@ public class Dikstra {
 
 	
 	public void calculateDijkstra(){
-		int i = 0;
+
 			while(containsFalse()){
-				i++;
-				if (i > 100){
-					break;
-				}
+				
+
 				IVertex currentVertex = getSmalestNotVisited();
+				System.out.println(currentVertex.toString());
 				Table.get(currentVertex).ok = true;
 					Set connectedSet = returnConnected(currentVertex);
 					Iterator iterator = connectedSet.iterator();
 					
 					while(iterator.hasNext()){
-						if(Table.get(iterator.next()).entfernung > Table.get(currentVertex).entfernung + searchGraph.getGraph().getEdgeWeight(searchGraph.getGraph().getEdge(currentVertex, (IVertex) iterator.next()))){
-							Table.get(iterator.next()).entfernung = Table.get(currentVertex).entfernung + searchGraph.getGraph().getEdgeWeight(searchGraph.getGraph().getEdge(currentVertex, (IVertex) iterator.next()));
-							Table.get(iterator.next()).vorgeanger = currentVertex;
+						IVertex currentVertex2 = (IVertex) iterator.next();
+						if(Table.get(currentVertex2).entfernung > Table.get(currentVertex).entfernung + searchGraph.getGraph().getEdgeWeight(searchGraph.getGraph().getEdge(currentVertex, currentVertex2))){
+							Table.get(currentVertex2).entfernung = Table.get(currentVertex).entfernung + searchGraph.getGraph().getEdgeWeight(searchGraph.getGraph().getEdge(currentVertex, currentVertex2));
+							Table.get(currentVertex2).vorgeanger = currentVertex;
 						}
 					}
 			}
@@ -141,14 +167,27 @@ public class Dikstra {
 		double weight = Table.get(endVertex).entfernung;
 		IVertex vertex1 = endVertex;
 		IVertex vertex2 = Table.get(endVertex).vorgeanger;
-	int i = 0;
+		int i = 0;
 		while (vertex2 != startVertx){
 			i++;
+			System.out.println(i);
 			EdgePath.add(searchGraph.getGraph().getEdge(vertex1, vertex2));
-			if(i > 100){
-				break;
-			}
+			vertex1 = vertex2;
+			vertex2 = Table.get(vertex2).vorgeanger;
+
 		}
+		EdgePath.add(searchGraph.getGraph().getEdge(vertex1, vertex2));
+		System.out.println("-------------Testing begins-------------------");
+		Iterator testIT = vertexSet.iterator();
+			while(testIT.hasNext()){
+				IVertex currentVertex = (IVertex) testIT.next();
+				System.out.println("Knoten : " + currentVertex);
+				System.out.println("Hat entfernung : " + Table.get(currentVertex).entfernung);
+				System.out.println("wurde bearbeitet : " + Table.get(currentVertex).ok);
+				System.out.println("hatt den vorgeanger : " + Table.get(currentVertex).vorgeanger.toString());
+				System.out.println("_________________");
+				System.out.println("_________________");
+			}
 		
 	GraphPath retunrGraphPath = new GraphPathImpl<IVertex,Edge>(searchGraph.getGraph(),endVertex,startVertx,EdgePath,weight);
 	//Cause of awsome

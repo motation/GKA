@@ -21,7 +21,7 @@ import algorithms.Dikstra;
 
 public class TestDijkstra {
 		
-	
+
 	IGraph testGraph1 = UndirectedWeightedGraph.createNewGraph();
 	IVertex v1 = new Vertex("V1");
 	IVertex v2 = new Vertex("V2");
@@ -31,12 +31,12 @@ public class TestDijkstra {
 	IVertex v6 = new Vertex("V6");
 	IVertex v7 = new Vertex("V7");
 	
-	Edge e1 = new WeightedEdge(v1,v2,10.0);
-	Edge e2 = new WeightedEdge(v2,v3,7.0);
-	Edge e3 = new WeightedEdge(v2,v4,1.0);
-	Edge e4 = new WeightedEdge(v4,v1,3.0);
-	Edge e5 = new WeightedEdge(v5,v6,4.0);
-	Edge e6 = new WeightedEdge(v6,v7,7.0);
+	Edge e1 = new WeightedEdge(v1,v2,1.0);
+	Edge e2 = new WeightedEdge(v2,v3,2.0);
+	Edge e3 = new WeightedEdge(v2,v4,3.0);
+	Edge e4 = new WeightedEdge(v4,v1,4.0);
+	Edge e5 = new WeightedEdge(v5,v6,5.0);
+	Edge e6 = new WeightedEdge(v6,v7,6.0);
 	Edge e7 = new WeightedEdge(v4,v5,7.0);
 	
 	
@@ -72,11 +72,13 @@ public class TestDijkstra {
 	public void test() {
 		
 		
-		Dikstra dijk = new Dikstra(testGraph1,v1,v2);
+		Dikstra dijk = new Dikstra(testGraph1,v1,v7);
 		
-
+	
 		dijk.calculateDijkstra();
-		DijkstraShortestPath dijk2 = new DijkstraShortestPath((Graph) testGraph1,v1,v3);	
+		dijk.getShortestPath();
+		//System.out.println(dijk.getShortestPath().toString());
+		DijkstraShortestPath dijk2 = new DijkstraShortestPath((Graph) testGraph1.getGraph(),v1,v7);	
 		assertEquals(dijk.getShortestPath(), dijk2.getPath());
 	}
 
