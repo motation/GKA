@@ -1,5 +1,6 @@
 package gui;
 
+import graphs.creator.GraphCreator;
 import io.FileGraphReader;
 import io.FileGraphWriter;
 
@@ -38,6 +39,8 @@ public class StartWindow extends JFrame {
 		JMenuBar menubar = new JMenuBar();
 		JMenu file = new JMenu("Datei");
 		JMenuItem open = new JMenuItem("Öffnen");
+		JMenuItem randomGraph = new JMenuItem("Random Graph");
+		JMenuItem createBIG = new JMenuItem("create BIG");
 		final JMenuItem save = new JMenuItem("speichern");
 		final JMenu algos = new JMenu("Algorithmen");
 		algos.setEnabled(false);
@@ -104,8 +107,70 @@ public class StartWindow extends JFrame {
 
 			}
 		});
+		
+		randomGraph.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Container contentPane = StartWindow.this
+						.getContentPane();
+				
+				//TODO open UI to enter amount of vertexes
+				graph = GraphCreator.createUndirectedAttributedWeightedGraph(10);
+				graphPane = new JGraph(new JGraphModelAdapter<>(graph
+						.getGraph()));
+
+				final JGraphSimpleLayout graphLayout = new JGraphSimpleLayout(
+						JGraphSimpleLayout.TYPE_CIRCLE, 100, 100);
+				final JGraphFacade graphFacade = new JGraphFacade(
+						graphPane);
+				graphLayout.run(graphFacade);
+				final Map nestedMap = graphFacade.createNestedMap(true,
+						true);
+				graphPane.getGraphLayoutCache().edit(nestedMap);
+
+				contentPane.removeAll();
+				contentPane.add(graphPane);
+				contentPane.revalidate();
+				save.setEnabled(true);
+				algos.setEnabled(true);
+			}
+		});
+		
+		
+		createBIG.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Container contentPane = StartWindow.this
+						.getContentPane();
+				
+				//TODO open UI to enter amount of vertexes --> BIT 100 vertex 6000edges
+				graph = GraphCreator.createUndirectedWeightedGraph(100, 6000);
+				graphPane = new JGraph(new JGraphModelAdapter<>(graph
+						.getGraph()));
+
+				final JGraphSimpleLayout graphLayout = new JGraphSimpleLayout(
+						JGraphSimpleLayout.TYPE_CIRCLE, 100, 100);
+				final JGraphFacade graphFacade = new JGraphFacade(
+						graphPane);
+				graphLayout.run(graphFacade);
+				final Map nestedMap = graphFacade.createNestedMap(true,
+						true);
+				graphPane.getGraphLayoutCache().edit(nestedMap);
+
+				contentPane.removeAll();
+				contentPane.add(graphPane);
+				contentPane.revalidate();
+				save.setEnabled(true);
+				algos.setEnabled(true);
+			}
+		});
+		
 		file.add(open);
 		file.add(save);
+		file.add(randomGraph);
+		file.add(createBIG);
 
 		JMenuItem breadthFirst = new JMenuItem("Breitensuche");
 		JMenuItem dijkstra = new JMenuItem("Dijkstra");
