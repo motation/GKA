@@ -3,6 +3,7 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -10,9 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jgraph.graph.Edge;
+
 import algorithms.IAlgorithm;
 import elements.IGraph;
 import elements.IVertex;
+import elements.WeightedEdge;
 
 public class AlgorithmWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -63,8 +67,15 @@ public class AlgorithmWindow extends JFrame {
 				algorithm.setStartVertx(selectedStartVertex);
 				algorithm.setEndVertex(selectedEndVertex);
 				algorithm.calculate();
+				List<Edge> edges = algorithm.getShortestPath().getEdgeList();
+				String path = "";
+				for(Edge edge : edges){
+					WeightedEdge wEdge = (WeightedEdge) edge;
+					path += wEdge.getSource() + " --> " + wEdge.getTarget() + " weight == "+ wEdge.getWeight()+", ";
+				}
 				
-				shortestPathText.setText(algorithm.getShortestPath().getEdgeList().toString());
+				shortestPathResult.setText(path);
+				
 			}
 		});
 		this.add(calculateShortestPath);
