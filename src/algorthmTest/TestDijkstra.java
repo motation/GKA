@@ -10,11 +10,14 @@ import graphs.UndirectedWeightedGraph;
 
 import org.jgraph.graph.Edge;
 import org.jgrapht.Graph;
+import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.generate.GraphGenerator;
 import org.jgrapht.generate.WeightedGraphGenerator;
 import org.junit.Test;
 
-import algorithms.DijkstraShortestPath_;
+import algorithms.Dikstra;
+
+
 
 public class TestDijkstra {
 		
@@ -36,7 +39,7 @@ public class TestDijkstra {
 	Edge e6 = new WeightedEdge(v6,v7,7.0);
 	Edge e7 = new WeightedEdge(v4,v5,7.0);
 	
-	DijkstraShortestPath_ dijk = new DijkstraShortestPath_(testGraph1);
+	
 	
 	public TestDijkstra(){
 		testGraph1.addVertex(v1);
@@ -53,19 +56,28 @@ public class TestDijkstra {
 		testGraph1.addEdge(v5, v6, e5);
 		testGraph1.addEdge(v6, v7, e6);
 		testGraph1.addEdge(v4, v5, e7);
+
+		//Dikstra dijk = new Dikstra(testGraph1);
 		
 		
-		dijk.setStartVertx(v1);
-		dijk.setEndVertex(v3);
-		dijk.CalculateDijkstra();
+	//	dijk.setStartVertx(v1);
+		//dijk.setEndVertex(v3);
+		//dijk.calculateDijkstra();
 		
-		 dijk.getShortestPath();
+		 
 		
 		
 	}
 	@Test
 	public void test() {
 		
+		
+		Dikstra dijk = new Dikstra(testGraph1,v1,v2);
+		
+
+		dijk.calculateDijkstra();
+		DijkstraShortestPath dijk2 = new DijkstraShortestPath((Graph) testGraph1,v1,v3);	
+		assertEquals(dijk.getShortestPath(), dijk2.getPath());
 	}
 
 }
