@@ -19,18 +19,7 @@ import elements.IGraph;
 import elements.IVertex;
 
 public class Dikstra {
-	class Values{
-		public double entfernung;
-		public IVertex vorgeanger;
-		public boolean ok ;
-		
-		public Values(double entfernung,IVertex vorgeanger,boolean ok){
-			this.entfernung = entfernung;
-			this.vorgeanger = vorgeanger;
-			this.ok = ok;
-		}
-		
-		}	
+	
 	
 	public IVertex getStartVertx() {
 		return startVertx;
@@ -58,7 +47,18 @@ public class Dikstra {
 	private IGraph searchGraph;
 	private Set vertexSet = new HashSet();
 	
-
+	class Values{
+		public double entfernung;
+		public IVertex vorgeanger;
+		public boolean ok ;
+		
+		public Values(double entfernung,IVertex vorgeanger,boolean ok){
+			this.entfernung = entfernung;
+			this.vorgeanger = vorgeanger;
+			this.ok = ok;
+		}
+		
+		}
 
 	
 	public Dikstra(IGraph searchGraph, IVertex startVertx, IVertex endVertex){
