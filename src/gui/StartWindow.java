@@ -21,6 +21,8 @@ import javax.swing.filechooser.FileFilter;
 import org.jgraph.JGraph;
 import org.jgrapht.ext.JGraphModelAdapter;
 
+import algorithms.Dikstra;
+
 import com.jgraph.layout.JGraphFacade;
 import com.jgraph.layout.graph.JGraphSimpleLayout;
 
@@ -188,7 +190,7 @@ public class StartWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				JFrame frame = new AlgorithmWindow(graph, null);
+				JFrame frame = new AlgorithmWindow(new Dikstra(graph));
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				frame.setSize(768,500);
 				frame.setVisible(true);				

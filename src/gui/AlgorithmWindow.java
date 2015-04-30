@@ -24,9 +24,9 @@ public class AlgorithmWindow extends JFrame {
 	private JLabel shortestPathText;
 	private JLabel shortestPathResult;
 
-	public AlgorithmWindow(IGraph graph, IAlgorithm algorithm) {
+	public AlgorithmWindow(IAlgorithm algorithm) {
 		super();
-		this.graph = graph;
+		this.graph = algorithm.getGraph();
 		
 		this.algorithm = algorithm;
 		
@@ -60,6 +60,11 @@ public class AlgorithmWindow extends JFrame {
 				IVertex selectedEndVertex = endVertex.getItemAt(endVertex.getSelectedIndex());
 				//TODO algo set algorithm
 				//TODO start calculation
+				algorithm.setStartVertx(selectedStartVertex);
+				algorithm.setEndVertex(selectedEndVertex);
+				algorithm.calculate();
+				
+				shortestPathText.setText(algorithm.getShortestPath().getEdgeList().toString());
 			}
 		});
 		this.add(calculateShortestPath);
