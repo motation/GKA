@@ -13,8 +13,6 @@ import org.jgrapht.graph.GraphPathImpl;
 
 
 
-
-import elements.IAttributedVertex;
 import elements.IGraph;
 import elements.IVertex;
 
@@ -45,7 +43,7 @@ public class Dikstra implements IAlgorithm {
 	private HashMap<IVertex, Values> Table = new HashMap<IVertex, Values>();
 	
 	private IGraph searchGraph;
-	private Set vertexSet = new HashSet();
+	private Set<IVertex> vertexSet = new HashSet<IVertex>();
 	
 	class Values{
 		public double entfernung;
@@ -66,7 +64,7 @@ public class Dikstra implements IAlgorithm {
 		}
 	
 	public boolean containsFalse(){
-		 Iterator iterator = vertexSet.iterator();
+		 Iterator<IVertex> iterator = vertexSet.iterator();
 		 iterator.next();
 	        while (iterator.hasNext()) {
 
@@ -82,7 +80,7 @@ public class Dikstra implements IAlgorithm {
 	
 	public IVertex getSmalestNotVisited(){
 		
-		Iterator iterator = vertexSet.iterator();
+		Iterator<IVertex> iterator = vertexSet.iterator();
 		IVertex tempVertex = null;
 		double smalest = Double.POSITIVE_INFINITY;
 		
@@ -90,23 +88,20 @@ public class Dikstra implements IAlgorithm {
 			IVertex currentVertex = (IVertex) iterator.next();
 			
 			if(Table.get(currentVertex).ok != true){
-//				System.out.println(currentVertex.toString());
-//				System.out.println(Table.get(currentVertex).entfernung);
+
 				
 				if(Table.get(currentVertex).entfernung < smalest){
-//					System.out.println("Smallter than");
 					tempVertex = currentVertex;
 					smalest = Table.get(currentVertex).entfernung;
 				}
 			}
 		}
-//		System.out.println(tempVertex.toString());
 		return tempVertex;
 	}
 	
 	public Set<IVertex> returnConnected(IVertex Center){
-		Set returnSet = new HashSet();
-		Iterator iterator = vertexSet.iterator();
+		Set<IVertex> returnSet = new HashSet<IVertex>();
+		Iterator<IVertex> iterator = vertexSet.iterator();
 		
 		while(iterator.hasNext()){
 			IVertex currentVertex = (IVertex) iterator.next();
@@ -125,10 +120,9 @@ public class Dikstra implements IAlgorithm {
 				
 
 				IVertex currentVertex = getSmalestNotVisited();
-//				System.out.println(currentVertex.toString());
 				Table.get(currentVertex).ok = true;
-					Set connectedSet = returnConnected(currentVertex);
-					Iterator iterator = connectedSet.iterator();
+					Set<?> connectedSet = returnConnected(currentVertex);
+					Iterator<?> iterator = connectedSet.iterator();
 					
 					while(iterator.hasNext()){
 						IVertex currentVertex2 = (IVertex) iterator.next();
@@ -146,6 +140,7 @@ public class Dikstra implements IAlgorithm {
 		IVertex vertex1 = endVertex;
 		IVertex vertex2 = Table.get(endVertex).vorgeanger;
 		
+		
 		while (vertex1 != startVertx)
 		{
 			EdgePath.add(searchGraph.getGraph().getEdge(vertex1, vertex2));
@@ -155,7 +150,7 @@ public class Dikstra implements IAlgorithm {
 		}
 		
 		
-//		System.out.println("-------------Testing begins-------------------");
+//		System.out.println("-------------Debug-------------------");
 //		Iterator testIT = vertexSet.iterator();
 //			while(testIT.hasNext()){
 //				IVertex currentVertex = (IVertex) testIT.next();
@@ -180,7 +175,7 @@ public class Dikstra implements IAlgorithm {
 	}
 	private void init() {
 		vertexSet.addAll((searchGraph.getGraph().vertexSet()));
-		 Iterator iterator = vertexSet.iterator();
+		 Iterator<IVertex> iterator = vertexSet.iterator();
 
 		 			while (iterator.hasNext()) {
 		 	        	IVertex currentVertex = (IVertex) iterator.next();
