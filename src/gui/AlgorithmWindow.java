@@ -3,6 +3,7 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -10,9 +11,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.jgraph.graph.Edge;
+
 import algorithms.IAlgorithm;
 import elements.IGraph;
 import elements.IVertex;
+import elements.WeightedEdge;
 
 public class AlgorithmWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -24,9 +28,9 @@ public class AlgorithmWindow extends JFrame {
 	private JLabel shortestPathText;
 	private JLabel shortestPathResult;
 
-	public AlgorithmWindow(IGraph graph, IAlgorithm algorithm) {
+	public AlgorithmWindow(IAlgorithm algorithm) {
 		super();
-		this.graph = graph;
+		this.graph = algorithm.getGraph();
 		
 		this.algorithm = algorithm;
 		
@@ -60,6 +64,18 @@ public class AlgorithmWindow extends JFrame {
 				IVertex selectedEndVertex = endVertex.getItemAt(endVertex.getSelectedIndex());
 				//TODO algo set algorithm
 				//TODO start calculation
+				algorithm.setStartVertx(selectedStartVertex);
+				algorithm.setEndVertex(selectedEndVertex);
+				algorithm.calculate();
+				List<Edge> edges = algorithm.getShortestPath().getEdgeList();
+				String path = "";
+				for(Edge edge : edges){
+					WeightedEdge wEdge = (WeightedEdge) edge;
+					path += wEdge.getSource() + " --> " + wEdge.getTarget() + " weight == "+ wEdge.getWeight()+", ";
+				}
+				
+				shortestPathResult.setText(path);
+				
 			}
 		});
 		this.add(calculateShortestPath);
