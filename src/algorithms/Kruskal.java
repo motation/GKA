@@ -10,12 +10,16 @@ import java.util.Set;
 
 import org.jgraph.graph.Edge;
 import org.jgrapht.GraphPath;
+import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.GraphPathImpl;
+
+
 
 
 
 import elements.IGraph;
 import elements.IVertex;
+import elements.WeightedEdge;
 
 public class Kruskal {
 
@@ -35,10 +39,28 @@ public class Kruskal {
 	}
 
 	public IGraph compute(){
+		Set<Edge> tempVertexSet = CompleteGraph.getGraph().edgeSet();
+		Set<WeightedEdge> actualSet = new HashSet<WeightedEdge>();
+			for(Edge edgetroll: tempVertexSet){
+				actualSet.add((WeightedEdge) edgetroll);
+			}
+		WeightedEdge smallestEdge = getLowestEdge(actualSet);
 		
+		
+		//SCC.addEdge(vertexSource, vertexTarget, edge);
 		
 		return null;
 		
+	}
+	
+	public WeightedEdge getLowestEdge(Set<WeightedEdge> edgeSet3){
+		WeightedEdge tempEdge = null;
+		for(WeightedEdge edgetroll: edgeSet3){
+			if (tempEdge.getWeight() > edgetroll.getWeight()){
+				tempEdge = edgetroll;
+			}
+		}
+		return tempEdge;
 	}
 	
 	public boolean reachable(IVertex start, IVertex end,IGraph graph){
