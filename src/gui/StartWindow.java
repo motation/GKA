@@ -21,14 +21,19 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import org.jgraph.JGraph;
+import org.jgraph.event.GraphSelectionEvent;
+import org.jgraph.event.GraphSelectionListener;
 import org.jgrapht.ext.JGraphModelAdapter;
 
 import algorithms.Dikstra;
+import algorithms.Prim;
 
 import com.jgraph.layout.JGraphFacade;
 import com.jgraph.layout.graph.JGraphSimpleLayout;
 
 import elements.IGraph;
+import elements.IVertex;
+import elements.Vertex;
 
 public class StartWindow extends JFrame {
 	/**
@@ -37,6 +42,22 @@ public class StartWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JGraph graphPane = null;
 	private IGraph graph = null;
+	private IVertex startVertex;
+	
+	private void initJGraphPane(){
+		graphPane.getSelectionModel().addGraphSelectionListener(new GraphSelectionListener() {
+			
+			@Override
+			public void valueChanged(GraphSelectionEvent arg0) {
+				String name = arg0.getCell().toString();
+				startVertex = new Vertex(name);
+			}
+		});
+			
+		
+		
+		
+	}
 
 	public StartWindow() throws IOException {
 		super("GKA Graph Simumlation");
@@ -49,6 +70,7 @@ public class StartWindow extends JFrame {
 		final JMenuItem save = new JMenuItem("speichern");
 		final JMenu algos = new JMenu("Algorithmen");
 		algos.setEnabled(false);
+		
 		open.addActionListener(new ActionListener() {
 
 			@Override
@@ -80,6 +102,7 @@ public class StartWindow extends JFrame {
 						contentPane.revalidate();
 						save.setEnabled(true);
 						algos.setEnabled(true);
+						initJGraphPane();
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -139,6 +162,7 @@ public class StartWindow extends JFrame {
 				contentPane.revalidate();
 				save.setEnabled(true);
 				algos.setEnabled(true);
+				initJGraphPane();
 			}
 		});
 		
@@ -176,6 +200,7 @@ public class StartWindow extends JFrame {
 							contentPane.revalidate();
 							save.setEnabled(true);
 							algos.setEnabled(true);
+							initJGraphPane();
 					 }
 				 }
 				 
@@ -221,10 +246,12 @@ public class StartWindow extends JFrame {
 		JMenuItem breadthFirst = new JMenuItem("Breitensuche");
 		JMenuItem dijkstra = new JMenuItem("Dijkstra");
 		JMenuItem aStar = new JMenuItem("A*");
+		JMenuItem prim = new JMenuItem("Prim");
 
 		algos.add(breadthFirst);
 		algos.add(dijkstra);
 		algos.add(aStar);
+		algos.add(prim);
 		menubar.add(file);
 		menubar.add(algos);
 		setJMenuBar(menubar);
@@ -241,6 +268,42 @@ public class StartWindow extends JFrame {
 			}
 
 		});
+		
+		prim.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Container contentPane = StartWindow.this
+						.getContentPane();
+				
+				//TODO open UI to enter amount of vertexes --> BIT 100 vertex 6000edges
+				Prim prim = new Prim(graph, startVertex);
+				prim.init();
+				prim.loop();
+				System.out.println(prim.getEdgeSum());
+				graph = prim.createGraph();
+				graphPane = new JGraph(new JGraphModelAdapter<>(graph
+						.getGraph()));
+
+				final JGraphSimpleLayout graphLayout = new JGraphSimpleLayout(
+						JGraphSimpleLayout.TYPE_CIRCLE, 100, 100);
+				final JGraphFacade graphFacade = new JGraphFacade(
+						graphPane);
+				graphLayout.run(graphFacade);
+				final Map nestedMap = graphFacade.createNestedMap(true,
+						true);
+				graphPane.getGraphLayoutCache().edit(nestedMap);
+
+				contentPane.removeAll();
+				contentPane.add(graphPane);
+				contentPane.revalidate();
+				save.setEnabled(true);
+				algos.setEnabled(true);
+			}
+
+		});
+		
+		
 	}
 
 	private class GkaFileFilter extends FileFilter {

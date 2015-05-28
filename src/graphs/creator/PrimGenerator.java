@@ -27,13 +27,10 @@ public class PrimGenerator {
 			double weight = createRandomInt(1, 100);
 			IVertex source = vertexList.get((createRandomInt(0, vertexList.size()-1)));
 			IVertex target = vertexList.get((createRandomInt(0, vertexList.size()-1)));
-			if(source.equals(target)){
-				while(!source.equals(target)){
+				while(source.equals(target)){
 					source = vertexList.get((createRandomInt(0, vertexList.size()-1)));
 					target = vertexList.get((createRandomInt(0, vertexList.size()-1)));
-				}
 			}
-			
 			
 			WeightedEdge edge = new WeightedEdge(source, target, weight);
 			graph.addEdge(source, target, edge);
