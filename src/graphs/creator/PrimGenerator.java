@@ -16,24 +16,29 @@ public class PrimGenerator {
 		
 		// add vertexes
 		for(int i=0;i<numVertex;i++){
-			IVertex source = new Vertex(String	.valueOf(createLetter()));
-			IVertex target = new Vertex(String.valueOf(createLetter()));
+			IVertex source = new Vertex(String.valueOf(createLetter()));
 			graph.addVertex(source);
-			graph.addVertex(target);	
 		}
 		
 		//add Edges
 		List<IVertex> vertexList = new ArrayList<IVertex>(graph.getGraph().vertexSet());
-		int count = 0;
-		while(count < numEdges){
+		
+		for(int i=0;i < numEdges; i++){
 			double weight = createRandomInt(1, 100);
 			IVertex source = vertexList.get((createRandomInt(0, vertexList.size()-1)));
 			IVertex target = vertexList.get((createRandomInt(0, vertexList.size()-1)));
+			if(source.equals(target)){
+				while(!source.equals(target)){
+					source = vertexList.get((createRandomInt(0, vertexList.size()-1)));
+					target = vertexList.get((createRandomInt(0, vertexList.size()-1)));
+				}
+			}
+			
+			
 			WeightedEdge edge = new WeightedEdge(source, target, weight);
 			graph.addEdge(source, target, edge);
 			WeightedEdge edge2 = new WeightedEdge(target, source, weight);
 			graph.addEdge(target, source, edge2);
-			count++;
 		}
 		
 		
