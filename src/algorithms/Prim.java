@@ -23,6 +23,9 @@ public class Prim {
     private IVertex startVertex;
     private List<MyVertex> finalList;
     private List<MyVertex> myVertexList;
+    private long startTime;
+    private long endTime;
+   
 
     public Prim(IGraph graph, IVertex startVertex) {
         this.graph = graph;
@@ -32,6 +35,7 @@ public class Prim {
     }
 
     public void init() {
+    	startTime = System.currentTimeMillis();
         queue = new PriorityQueue<>(20, new Comparator<MyVertex>() {
             @Override
             public int compare(MyVertex o1, MyVertex o2) {
@@ -79,6 +83,19 @@ public class Prim {
             }
 
         }
+        endTime = System.currentTimeMillis();
+    }
+    
+    public double getEdgeSum(){
+    	double sum = 0;
+    	for(MyVertex myVertex : finalList){
+    		sum+=myVertex.value;
+    	}
+    	return sum;
+    }
+    
+    public long getTime(){
+    	return endTime - startTime;
     }
 
     public IGraph createGraph(){
