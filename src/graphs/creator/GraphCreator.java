@@ -25,7 +25,7 @@ public class GraphCreator {
 		
 	}
 	
-	public static IGraph createUndirectedWeightedGraph(int numVertexes, int numEdges){
+	public static IGraph createUndirectedWeightedGraph(final int numVertexes,final int numEdges){
 		if(numVertexes <= -1 && numEdges <= -1){
 			return null;
 		}
@@ -93,7 +93,7 @@ public class GraphCreator {
 		return undirectedGraph;
 	}
 	
-	public static IGraph createUndirectedAttributedWeightedGraph(int numVertexes){
+	public static IGraph createUndirectedAttributedWeightedGraph(final int numVertexes){
 		IGraph graph = UndirectedAttributedWeightedGraph.createNewGraph();
 		//TODO implement undirectedAttributedWeightedGraph
 		
