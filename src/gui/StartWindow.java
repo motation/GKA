@@ -1,6 +1,7 @@
 package gui;
 
 import graphs.creator.GraphCreator;
+import graphs.creator.PrimGenerator;
 import io.FileGraphReader;
 import io.FileGraphWriter;
 
@@ -16,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
 import org.jgraph.JGraph;
@@ -42,6 +44,7 @@ public class StartWindow extends JFrame {
 		JMenu file = new JMenu("Datei");
 		JMenuItem open = new JMenuItem("Öffnen");
 		JMenuItem randomGraph = new JMenuItem("Random Graph");
+		JMenuItem primRandom = new JMenuItem("PrimGenerator");
 		JMenuItem createBIG = new JMenuItem("create BIG");
 		final JMenuItem save = new JMenuItem("speichern");
 		final JMenu algos = new JMenu("Algorithmen");
@@ -140,6 +143,46 @@ public class StartWindow extends JFrame {
 		});
 		
 		
+		primRandom.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 String responseVertex = JOptionPane.showInputDialog(null, "Gib die Anzahl der Knoten ein");
+				 String responseEdge = JOptionPane.showInputDialog(null, "Gib die Anzahl der Kanten ein");
+				 if(responseVertex != null && responseEdge != null){
+					 int numVertex = Integer.parseInt(responseVertex);
+					 int numEdge = Integer.parseInt(responseEdge);
+					 if(numVertex > numEdge && numVertex > 0 && numEdge > 0){
+						 
+						 // draw graph and load
+						 Container contentPane = StartWindow.this
+									.getContentPane();
+							
+							//TODO open UI to enter amount of vertexes
+							graph = PrimGenerator.createRandomPrimGraph(numVertex, numEdge);
+							graphPane = new JGraph(new JGraphModelAdapter<>(graph
+									.getGraph()));
+
+							final JGraphSimpleLayout graphLayout = new JGraphSimpleLayout(
+									JGraphSimpleLayout.TYPE_CIRCLE, 100, 100);
+							final JGraphFacade graphFacade = new JGraphFacade(
+									graphPane);
+							graphLayout.run(graphFacade);
+							final Map nestedMap = graphFacade.createNestedMap(true,
+									true);
+							graphPane.getGraphLayoutCache().edit(nestedMap);
+
+							contentPane.removeAll();
+							contentPane.add(graphPane);
+							contentPane.revalidate();
+							save.setEnabled(true);
+							algos.setEnabled(true);
+					 }
+				 }
+				 
+			}
+		});
+		
+		
 		createBIG.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -172,6 +215,7 @@ public class StartWindow extends JFrame {
 		file.add(open);
 		file.add(save);
 		file.add(randomGraph);
+		file.add(primRandom);
 		file.add(createBIG);
 
 		JMenuItem breadthFirst = new JMenuItem("Breitensuche");
