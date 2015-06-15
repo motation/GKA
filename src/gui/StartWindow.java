@@ -277,7 +277,7 @@ public class StartWindow extends JFrame {
 						.getContentPane();
 				
 				//TODO open UI to enter amount of vertexes --> BIT 100 vertex 6000edges
-				Prim prim = new Prim(graph, startVertex);
+				Prim prim = new Prim(graph);
 				prim.init();
 				prim.loop();
 				System.out.println(prim.getEdgeSum());

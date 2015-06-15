@@ -92,4 +92,9 @@ public class DirectedWeightedGraph implements IGraph {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Set<Edge> edgesFrom(IVertex vertex) {
+		return null;
+	}
 }

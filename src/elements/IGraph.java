@@ -17,4 +17,5 @@ public interface IGraph {
 	void addVertex(IVertex vertex);
 	void addEdge(IVertex vertexSource, IVertex vertexTarget, Edge edge);
 	void save(File file);
+	Set<Edge> edgesFrom(IVertex vertex);
 }

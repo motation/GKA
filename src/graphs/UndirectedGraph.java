@@ -85,4 +85,9 @@ public void save(File file) {
 	// TODO Auto-generated method stub
 	
 }
+	@Override
+	public Set<Edge> edgesFrom(IVertex vertex) {
+		return null;
+	}
+
 }

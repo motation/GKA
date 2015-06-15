@@ -95,4 +95,9 @@ public class DirectedGraph implements IGraph {
 		
 	}
 
+	@Override
+	public Set<Edge> edgesFrom(IVertex vertex) {
+		return null;
+	}
+
 }

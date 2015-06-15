@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jgraph.graph.Edge;
@@ -113,5 +114,12 @@ public class UndirectedAttributedWeightedGraph implements IGraph {
 		}
 		
 	}
-	
+
+	@Override
+	public Set<Edge> edgesFrom(IVertex vertex) {
+		Set<Edge> edgeSet = new HashSet<>();
+
+		return edgeSet;
+	}
+
 }

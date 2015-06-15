@@ -85,4 +85,9 @@ public class UndirectedAttributedGraph implements IGraph {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Set<Edge> edgesFrom(IVertex vertex) {
+		return null;
+	}
 }
