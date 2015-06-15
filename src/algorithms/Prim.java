@@ -27,9 +27,9 @@ public class Prim {
     private long endTime;
    
 
-    public Prim(IGraph graph, IVertex startVertex) {
+    public Prim(IGraph graph) {
         this.graph = graph;
-        this.startVertex = startVertex;
+        this.startVertex = graph.getGraph().vertexSet().iterator().next();
         myVertexList = new ArrayList<>();
         finalList = new ArrayList<>();
     }
