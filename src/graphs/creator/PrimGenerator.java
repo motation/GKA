@@ -65,6 +65,10 @@ public class PrimGenerator {
                 vertexes[i] = vertex;
                 IVertex source = vertexes[i-1];
                 IVertex target = vertexes[i];
+                if(source.equals(target)){
+                    i--;
+                    continue;
+                }
                 double weight = createRandomInt(0,300);
                 Edge edge = new WeightedEdge(source,target,weight);
                 graph.addVertex(target);
@@ -83,28 +87,20 @@ public class PrimGenerator {
 
             int numOfEdgesAdded = 0;
             List<IVertex> vertexList = new ArrayList<>(graph.getGraph().vertexSet());
-//            System.out.println("adding extra edges");
             int countAddFail = 0;
-            while(numOfEdgesAdded <= numOfEdgesToAdd){
+            while(numOfEdgesAdded <= numOfEdgesToAdd && countAddFail < 100000){
                 IVertex source = vertexList.get(createRandomInt(0,vertexList.size()-1));
                 IVertex target = vertexList.get(createRandomInt(0,vertexList.size()-1));
-                if(!graph.getGraph().containsEdge(source,target) && !source.equals(target) || countAddFail > 100000){
+                if((!graph.getGraph().containsEdge(source,target) && !source.equals(target))){
                     double weight = createRandomInt(0,300);
                     Edge edge = new WeightedEdge(source,target,weight);
                     graph.addEdge(source,target,edge);
                     numOfEdgesAdded++;
                 } else {
-//                    System.out.println("trying to existing edge :(");
                     countAddFail++;
                 }
             }
-            System.out.println("count add fail= " + countAddFail);
         }
         return graph;
-    }
-
-    public static void main(String[] args) {
-        IGraph graph = createPrimGraphWithoutLoop(20);
-        System.out.println(graph.getGraph().edgeSet().size());
     }
 }
