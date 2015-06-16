@@ -4,12 +4,8 @@ import elements.IGraph;
 import elements.IVertex;
 import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
-import graphs.creator.PrimGenerator;
-import io.FileGraphReader;
 import org.jgraph.graph.Edge;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

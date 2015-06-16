@@ -1,5 +1,6 @@
 package graphs.creator;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,6 +10,7 @@ import elements.IVertex;
 import elements.Vertex;
 import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
+import io.FileGraphReader;
 import org.jgraph.graph.Edge;
 
 public class PrimGenerator {
@@ -58,28 +60,31 @@ public class PrimGenerator {
         IGraph graph = UndirectedWeightedGraph.createNewGraph();
 
         IVertex[] vertexes = new Vertex[numVertexes];
+        List<IVertex> vertexList1 = new ArrayList<>();
 
         for(int i=0;i<numVertexes;i++){
             IVertex vertex = new Vertex(String.valueOf(createLetter()));
             if(i>0){
-                vertexes[i] = vertex;
-                IVertex source = vertexes[i-1];
-                IVertex target = vertexes[i];
-                if(source.equals(target)){
+                IVertex source = vertexList1.get(i-1);
+                IVertex target = vertex;
+                vertexList1.add(target);
+                if(source.equals(target) || graph.getGraph().containsEdge(source,target) || vertexList1.contains(target)){
                     i--;
                     continue;
                 }
                 double weight = createRandomInt(0,300);
                 Edge edge = new WeightedEdge(source,target,weight);
+                graph.addVertex(source);
                 graph.addVertex(target);
-                graph.addEdge(source,target,edge);
+                graph.addEdge(source, target, edge);
             } else {
-                vertexes[0] = vertex;
-                graph.addVertex(vertexes[0]);
+                vertexList1.add(vertex);
+                graph.addVertex(vertex);
             }
 
 
         }
+
         double maxEdges = (Math.pow(numVertexes,2) - numVertexes) / 2;
 
         if(maxEdges != numVertexes){
@@ -102,5 +107,12 @@ public class PrimGenerator {
             }
         }
         return graph;
+    }
+
+    public static void main(String[] args) {
+
+        while(true){
+            PrimGenerator.createPrimGraphWithoutLoop(6);
+        }
     }
 }
