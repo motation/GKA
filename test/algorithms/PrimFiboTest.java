@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 public class PrimFiboTest {
 
     private IGraph graph;
+    private IGraph graph2;
     private FileGraphReader reader;
 
     @Before
@@ -31,6 +32,22 @@ public class PrimFiboTest {
 
         reader = new FileGraphReader();
         graph = reader.loadGraphByString(stringGraph);
+
+        String stringGraph2 = "#weighted\n" +
+                "F,W::283.0\n" +
+                "W,B::2.0\n" +
+                "B,E::228.0\n" +
+                "F,B::3.0\n" +
+                "F,E::138.0\n" +
+                "W,E::70.0\n" +
+                "W,F::283.0\n" +
+                "B,W::2.0\n" +
+                "E,B::228.0\n" +
+                "B,F::3.0\n" +
+                "E,F::138.0\n" +
+                "E,W::70.0\n";
+
+        graph2 = reader.loadGraphByString(stringGraph2);
     }
 
     @Test
