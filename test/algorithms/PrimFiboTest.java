@@ -22,7 +22,13 @@ public class PrimFiboTest {
                 "L,O::242.0\n" +
                 "O,V::167.0\n" +
                 "Z,O::240.0\n" +
-                "Z,V::191.0";
+                "Z,V::191.0\n" +
+                "L,Z::31.0\n" +
+                "O,L::242.0\n" +
+                "V,O::167.0\n" +
+                "O,Z::240.0\n" +
+                "V,Z::191.0";
+
         reader = new FileGraphReader();
         graph = reader.loadGraphByString(stringGraph);
     }

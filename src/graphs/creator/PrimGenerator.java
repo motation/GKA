@@ -107,6 +107,19 @@ public class PrimGenerator {
                 }
             }
         }
+
+        List<Edge> edgeList = new ArrayList<>();
+        for(Edge edge : graph.getGraph().edgeSet()){
+            IVertex source = (IVertex) edge.getSource();
+            IVertex target = (IVertex) edge.getTarget();
+            WeightedEdge weightedEdge = (WeightedEdge) edge;
+            Edge doubleEdge = new WeightedEdge(target,source,weightedEdge.getWeight());
+            edgeList.add(doubleEdge);
+        }
+        for(Edge edge : edgeList){
+            WeightedEdge weightedEdge = (WeightedEdge) edge;
+            graph.getGraph().addEdge((IVertex) edge.getSource(), (IVertex) edge.getTarget(), weightedEdge);
+        }
         return graph;
     }
 }

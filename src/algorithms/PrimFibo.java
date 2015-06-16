@@ -4,8 +4,10 @@ import elements.IGraph;
 import elements.IVertex;
 import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
+import graphs.creator.PrimGenerator;
 import org.jgraph.graph.Edge;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,18 +26,6 @@ public class PrimFibo {
 
     public PrimFibo(IGraph graph) {
         this.graph = graph;
-        List<Edge> edgeList = new ArrayList<>();
-        for(Edge edge : graph.getGraph().edgeSet()){
-            IVertex source = (IVertex) edge.getSource();
-            IVertex target = (IVertex) edge.getTarget();
-            WeightedEdge weightedEdge = (WeightedEdge) edge;
-            Edge doubleEdge = new WeightedEdge(target,source,weightedEdge.getWeight());
-            edgeList.add(doubleEdge);
-        }
-        for(Edge edge : edgeList){
-            WeightedEdge weightedEdge = (WeightedEdge) edge;
-            graph.getGraph().addEdge((IVertex) edge.getSource(), (IVertex) edge.getTarget(), weightedEdge);
-        }
     }
 
     public IVertex minCostEndpoint(IVertex vertex) {
@@ -107,5 +97,26 @@ public class PrimFibo {
                 fibonacciHeap.decreaseKey(entries.get(exploreVertex), weight);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        double prim = 0;
+        double fibo = 0;
+        IGraph graph=null;
+        while(prim==fibo){
+             graph = PrimGenerator.createPrimGraphWithoutLoop(4);
+            PrimFibo primFibo = new PrimFibo(graph);
+            Prim pri = new Prim(graph);
+            pri.init();
+            pri.loop();
+            primFibo.minimumSpanningTree();
+            prim = pri.getEdgeSum();
+            fibo = primFibo.getSum();
+        }
+
+        graph.save(new File("C:\\test\\save.graph"));
+        System.out.println(prim);
+        System.out.println(fibo);
+
     }
 }
