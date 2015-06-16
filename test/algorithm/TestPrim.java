@@ -44,16 +44,16 @@ public class TestPrim {
 	@Test
 	public void positivTests(){
 		IVertex vertex1 = new Vertex("a");
-		Prim prim1 = new Prim(graph1, vertex1);
+		Prim prim1 = new Prim(graph1);
 		
 		IVertex vertex2 = new Vertex("a");
-		Prim prim2 = new Prim(graph2, vertex2);
+		Prim prim2 = new Prim(graph2);
 		
 		IVertex vertex3 = new Vertex("b");
-		Prim prim3 = new Prim(graph3,vertex3);
+		Prim prim3 = new Prim(graph3);
 		
 		IVertex vertex4 = new Vertex("b");
-		Prim prim4 = new Prim(graph3,vertex3);
+		Prim prim4 = new Prim(graph3);
 		
 		Assert.assertEquals(prim1.getEdgeSum(), prim2.getEdgeSum(),0.0001);
 		Assert.assertEquals(prim4.getEdgeSum(), prim3.getEdgeSum(),0.0001);
