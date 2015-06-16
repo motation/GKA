@@ -59,7 +59,6 @@ public class Kruskal {
 			}
 			tempGraph.getGraph().removeEdge(tempLowestEdge);
 		}
-		
 	}
 	
 	public double weightSum(){
