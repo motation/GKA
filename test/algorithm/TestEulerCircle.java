@@ -11,10 +11,11 @@ import elements.IGraph;
 import elements.IVertex;
 import elements.Vertex;
 import elements.WeightedEdge;
+import graphs.UndirectedWeightedGraph;
 
 public class TestEulerCircle {
-	IGraph graph1 = null;
-	IGraph graph2 = null;
+	IGraph graph1 = UndirectedWeightedGraph.createNewGraph();
+	IGraph graph2 = UndirectedWeightedGraph.createNewGraph();
 	Hierholzer hierh = new Hierholzer();
 	Fleury flury = new Fleury();
 	//IGraph
@@ -27,6 +28,11 @@ public class TestEulerCircle {
 		IVertex v4 = new Vertex("V4");
 		IVertex v5 = new Vertex("V5");
 		
+		graph1.addVertex(v1);
+		graph1.addVertex(v2);
+		graph1.addVertex(v3);
+		graph1.addVertex(v4);
+		graph1.addVertex(v5);
 		Edge e1 = new WeightedEdge(v1,v2,0.0);
 		Edge e2 = new WeightedEdge(v2,v3,0.0);
 		Edge e3 = new WeightedEdge(v3,v4,0.0);
@@ -82,6 +88,11 @@ public class TestEulerCircle {
 		IVertex v3 = new Vertex("V3");
 		IVertex v4 = new Vertex("V4");
 
+		graph2.addVertex(v1);
+		graph2.addVertex(v2);
+		graph2.addVertex(v3);
+		graph2.addVertex(v4);
+		
 		
 		Edge e1 = new WeightedEdge(v1,v2,0.0);
 		Edge e2 = new WeightedEdge(v1,v3,0.0);
