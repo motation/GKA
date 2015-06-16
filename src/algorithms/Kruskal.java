@@ -34,8 +34,7 @@ public class Kruskal {
 	
 
 	
-	public Kruskal(IGraph completeGraph, Set<Edge> vertexSet) {
-		super();
+	public Kruskal(IGraph completeGraph) {
 		CompleteGraph = completeGraph;
 		//this.EdgeSet = completeGraph.getAllEdges();
 	}
