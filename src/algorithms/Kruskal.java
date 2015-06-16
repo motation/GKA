@@ -37,11 +37,6 @@ public class Kruskal {
 	private IGraph CompleteGraph;
 	private IGraph SCC;
 	private Set<Edge> EdgeSet = new HashSet<Edge>();
-	
-	
-	
-
-	
 	public Kruskal(IGraph completeGraph) {
 		CompleteGraph = completeGraph;
 		SCC = UndirectedWeightedGraph.createNewGraph();
@@ -51,23 +46,32 @@ public class Kruskal {
 	public void compute(){
 		
 		IGraph tempGraph = CompleteGraph;
-		while(!(tempGraph.getAllEdges().isEmpty())){
-			Edge tempLowestEdge = getLowestEdge(tempGraph);
-			IVertex start = (IVertex) tempLowestEdge.getSource();
-			IVertex end = (IVertex) tempLowestEdge.getTarget();
-			//SCC.addEdge(start, end, tempLowestEdge);
-			Set<IVertex> vertexSet = SCC.getGraph().vertexSet(); 
-			if(!(hasCircle(SCC,start,end))){
-					if(!(vertexSet.contains(end))){
-						SCC.addVertex(end);
-					}
-					if(!(vertexSet.contains(start))){
-						SCC.addVertex(start);
-					}
-					SCC.addEdge(end, start, tempLowestEdge);
-			}
-			tempGraph.getGraph().removeEdge(tempLowestEdge);
-		}
+		
+		Edge tempLowestEdge = getLowestEdge(tempGraph);
+		
+		
+		
+//		IGraph tempGraph = CompleteGraph;
+//		while(!(tempGraph.getAllEdges().isEmpty())){
+//			
+//			Edge tempLowestEdge = getLowestEdge(tempGraph);
+//			
+//			IVertex start = (IVertex) tempLowestEdge.getSource();
+//			IVertex end = (IVertex) tempLowestEdge.getTarget();
+//			
+//			//SCC.addEdge(start, end, tempLowestEdge);
+//			Set<IVertex> vertexSet = SCC.getGraph().vertexSet(); 
+//			if(!(hasCircle(SCC,start,end))){
+//					if(!(vertexSet.contains(end))){
+//						SCC.addVertex(end);
+//					}
+//					if(!(vertexSet.contains(start))){
+//						SCC.addVertex(start);
+//					}
+//					SCC.addEdge(end, start, tempLowestEdge);
+//			}
+//			tempGraph.getGraph().removeEdge(tempLowestEdge);
+		//}
 	}
 	
 	public double weightSum(){
@@ -128,8 +132,9 @@ public class Kruskal {
 	public boolean hasCircle(IGraph graph, IVertex start, IVertex end){
 		Set<IVertex> vertexSet = graph.getGraph().vertexSet();
 		if(vertexSet.contains(start) && vertexSet.contains(end)){
-			if(reachable(start,end,graph))
-				return true;
+			//if(reachable(start,end,graph)){
+			//	return true;
+			//}
 		}
 		
 		return false;
