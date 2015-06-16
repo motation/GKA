@@ -95,7 +95,8 @@ public class Kruskal {
 	}
 	
 	public boolean reachable(IVertex start, IVertex end,IGraph graph){
-		Set<Edge> tempEdgeSet = graph.getOutgoingEdges(start);
+
+		Set<Edge> tempEdgeSet = graph.getGraph().edgesOf(start);
 		for(Edge edge: tempEdgeSet){
 			if( edge.getTarget() == end){
 				return true;
