@@ -28,7 +28,7 @@ public class Kruskal {
 
 	private IGraph CompleteGraph;
 	private IGraph SCC;
-	private Set<Edge> EdgeSet = new HashSet<Edge>();
+//	private Set<Edge> EdgeSet = new HashSet<Edge>();
 	
 	
 	
@@ -37,7 +37,7 @@ public class Kruskal {
 	public Kruskal(IGraph completeGraph, Set<Edge> vertexSet) {
 		super();
 		CompleteGraph = completeGraph;
-		this.EdgeSet = completeGraph.getAllEdges();
+		//this.EdgeSet = completeGraph.getAllEdges();
 	}
 
 	public void compute(){
