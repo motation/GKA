@@ -62,6 +62,16 @@ public class Kruskal {
 		
 	}
 	
+	public double weightSum(){
+		double WeightSum = 0;
+		for(Edge edge : SCC.getGraph().edgeSet()){
+		
+			WeightedEdge weightedEdge = (WeightedEdge) edge;
+			WeightSum = WeightSum + weightedEdge.getWeight();
+		}
+		return WeightSum;
+	}
+	
 	public IGraph returnGraph(){
 		return this.SCC;
 	}
