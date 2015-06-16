@@ -98,25 +98,4 @@ public class PrimFibo {
             }
         }
     }
-
-    public static void main(String[] args) {
-        double prim = 0;
-        double fibo = 0;
-        IGraph graph=null;
-        while(prim==fibo){
-             graph = PrimGenerator.createPrimGraphWithoutLoop(4);
-            PrimFibo primFibo = new PrimFibo(graph);
-            Prim pri = new Prim(graph);
-            pri.init();
-            pri.loop();
-            primFibo.minimumSpanningTree();
-            prim = pri.getEdgeSum();
-            fibo = primFibo.getSum();
-        }
-
-        graph.save(new File("C:\\test\\save.graph"));
-        System.out.println(prim);
-        System.out.println(fibo);
-
-    }
 }

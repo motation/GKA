@@ -6,8 +6,10 @@ import elements.MyVertex;
 import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
 
+import io.FileGraphReader;
 import org.jgraph.graph.Edge;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -75,6 +77,8 @@ public class Prim {
                 if (queue.contains(neighbor) && distanceToNeighbor < neighbor.value) {
                     neighbor.value = distanceToNeighbor;
                     neighbor.parent = vertex.vertex;
+                    queue.remove(neighbor);
+                    queue.add(neighbor);
                 } else if (neighbor.parent == null) {
                     neighbor.value = distanceToNeighbor;
                     neighbor.parent = vertex.vertex;
