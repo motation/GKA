@@ -1,14 +1,13 @@
 package algorithms;
 
-import elements.*;
+import elements.IGraph;
+import elements.IVertex;
+import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
-import graphs.creator.PrimGenerator;
-import io.FileGraphReader;
 import org.jgraph.graph.Edge;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Ole on 13.06.2015.
@@ -95,37 +94,5 @@ public class PrimFibo {
                 fibonacciHeap.decreaseKey(entries.get(exploreVertex), weight);
             }
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-
-//        double fiboSum = 0;
-//        double primSum = 0;
-//
-////        while(fiboSum == primSum){
-////            IGraph graph = PrimGenerator.createPrimGraphWithoutLoop(4);
-//        FileGraphReader reader = new FileGraphReader();
-//
-//        IGraph graph = reader.loadGraph("D:\\controll.graph");
-////            graph.save(new File("D:\\controll.graph"));
-//
-//        PrimFibo primFibo = new PrimFibo(graph);
-//        primFibo.minimumSpanningTree();
-//
-//        Prim prim = new Prim(graph);
-//        prim.init();
-//        prim.loop();
-//
-//        fiboSum = primFibo.getSum();
-//        primSum = prim.getEdgeSum();
-//
-////            System.out.println("Prim: " + prim.getEdgeSum());
-////            System.out.println("PrimFibo: " + primFibo.getSum());
-////        }
-//        System.out.println("FAILED");
-//        System.out.println(primSum);
-//        System.out.println(fiboSum);
-
-
     }
 }
