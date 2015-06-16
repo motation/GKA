@@ -23,40 +23,22 @@ public class TestPrim {
 	IGraph graph3;
 	IGraph graph4;
 	IGraph graph5;
+    FileGraphReader reader;
 	
 	@Before
 	public void init() throws IOException{
-		
-		File file1=new File("Z:\\win7\\GKA\\weighted1.graph");
-		File file2=new File("Z:\\win7\\GKA\\weighted2.graph");
-		File file3=new File("Z:\\win7\\GKA\\weighted3.graph");
-		File file4=new File("Z:\\win7\\GKA\\weighted4.graph");
-		File file5=new File("Z:\\win7\\GKA\\weighted5.graph");
-		
-		FileGraphReader reader = new FileGraphReader();
-		graph1 = reader.loadGraph(file1);
-		graph2 = reader.loadGraph(file2);
-		graph3 = reader.loadGraph(file3);
-		graph4 = reader.loadGraph(file4);
-		graph5 = reader.loadGraph(file5);
+        String stringGraph =    "#weighted\n" +
+                                "Z,L::31.0\n" +
+                                "L,O::242.0\n" +
+                                "O,V::167.0\n" +
+                                "Z,O::240.0\n" +
+                                "Z,V::191.0";
+        reader = new FileGraphReader();
+        graph1 = reader.loadGraphByString(stringGraph);
 	}
 	
 	@Test
 	public void positivTests(){
-		IVertex vertex1 = new Vertex("a");
-		Prim prim1 = new Prim(graph1);
-		
-		IVertex vertex2 = new Vertex("a");
-		Prim prim2 = new Prim(graph2);
-		
-		IVertex vertex3 = new Vertex("b");
-		Prim prim3 = new Prim(graph3);
-		
-		IVertex vertex4 = new Vertex("b");
-		Prim prim4 = new Prim(graph3);
-		
-		Assert.assertEquals(prim1.getEdgeSum(), prim2.getEdgeSum(),0.0001);
-		Assert.assertEquals(prim4.getEdgeSum(), prim3.getEdgeSum(),0.0001);
-	}
+        
+    }
 }
-

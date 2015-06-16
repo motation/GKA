@@ -1,9 +1,7 @@
 package io;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.Edge;
@@ -43,14 +41,25 @@ public class FileGraphReader {
 	}
 
 	public IGraph loadGraph(File file) throws IOException {
-		IGraph graph = buildGraph(file);
+		IGraph graph = loadGraphByFile(file);
 		return graph;
 	}
 
-	private IGraph buildGraph(File file) throws IOException {
-		IGraph graph = null;
+    public IGraph loadGraphByString(String stringGraph) throws IOException {
+        InputStream stream = new ByteArrayInputStream(stringGraph.getBytes(StandardCharsets.UTF_8));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        return buildGraph(reader);
+    }
 
-		BufferedReader reader = new BufferedReader(new FileReader(file));
+    private IGraph loadGraphByFile(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        return buildGraph(reader);
+    }
+
+
+
+	private IGraph buildGraph(BufferedReader reader) throws IOException {
+		IGraph graph = null;
 
 		boolean isDirected = false;
 		boolean isAttributed = false;
@@ -71,7 +80,7 @@ public class FileGraphReader {
 			}
 		} else {
 			reader.close();
-			reader = new BufferedReader(new FileReader(file));
+			reader.reset();
 		}
 
 		if (isDirected) {
