@@ -171,18 +171,16 @@ public class StartWindow extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				 String responseVertex = JOptionPane.showInputDialog(null, "Gib die Anzahl der Knoten ein");
-				 String responseEdge = JOptionPane.showInputDialog(null, "Gib die Anzahl der Kanten ein");
-				 if(responseVertex != null && responseEdge != null){
+				 if(responseVertex != null ){
 					 int numVertex = Integer.parseInt(responseVertex);
-					 int numEdge = Integer.parseInt(responseEdge);
-					 if(numVertex > numEdge && numVertex > 0 && numEdge > 0){
+					 if(numVertex > 0 ){
 						 
 						 // draw graph and load
 						 Container contentPane = StartWindow.this
 									.getContentPane();
 							
 							//TODO open UI to enter amount of vertexes
-							graph = PrimGenerator.createRandomPrimGraph(numVertex, numEdge);
+							graph = PrimGenerator.createPrimGraphWithoutLoop(numVertex);
 							graphPane = new JGraph(new JGraphModelAdapter<>(graph
 									.getGraph()));
 
