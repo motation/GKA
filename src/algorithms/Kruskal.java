@@ -49,13 +49,13 @@ public class Kruskal {
 			Edge tempLowestEdge = getLowestEdge(tempGraph);
 			IVertex start = (IVertex) tempLowestEdge.getSource();
 			IVertex end = (IVertex) tempLowestEdge.getTarget();
-			SCC.addEdge(start, end, tempLowestEdge);
+			//SCC.addEdge(start, end, tempLowestEdge);
 			Set<IVertex> vertexSet = SCC.getGraph().vertexSet(); 
 			if(!(hasCircle(SCC,start,end))){
 					if(!(vertexSet.contains(end))){
 						SCC.addVertex(end);
 					}
-					if(!(vertexSet.contains(end))){
+					if(!(vertexSet.contains(start))){
 						SCC.addVertex(start);
 					}
 					SCC.addEdge(end, start, tempLowestEdge);
