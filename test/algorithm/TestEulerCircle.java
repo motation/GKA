@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.jgraph.graph.Edge;
 import org.junit.Test;
 
+import algorithms.Fleury;
+import algorithms.Hierholzer;
 import elements.IGraph;
 import elements.IVertex;
 import elements.Vertex;
@@ -12,6 +14,8 @@ import elements.WeightedEdge;
 
 public class TestEulerCircle {
 	IGraph graph1 = null;
+	Hierholzer hierh = new Hierholzer();
+	Fleury flury = new Fleury();
 	//IGraph
 	
 	@Test
@@ -65,7 +69,8 @@ public class TestEulerCircle {
 		graph1.addEdge(v5, v2, e15);
 		//#Hail_satan;#down_there:#hot_in_here
 		
-		
+		hierh.compute(graph1);
+		flury.compute(graph1);
 		
 		
 	}
