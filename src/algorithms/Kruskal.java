@@ -17,8 +17,10 @@ import org.jgrapht.graph.GraphPathImpl;
 
 
 
+
 import elements.IGraph;
 import elements.IVertex;
+import elements.Vertex;
 import elements.WeightedEdge;
 
 public class Kruskal {
@@ -38,29 +40,56 @@ public class Kruskal {
 		this.EdgeSet = completeGraph.getAllEdges();
 	}
 
-	public IGraph compute(){
-		Set<Edge> tempVertexSet = CompleteGraph.getGraph().edgeSet();
-		Set<WeightedEdge> actualSet = new HashSet<WeightedEdge>();
-			for(Edge edgetroll: tempVertexSet){
-				actualSet.add((WeightedEdge) edgetroll);
+	public void compute(){
+		IGraph tempGraph = CompleteGraph;
+		while(!(tempGraph.getAllEdges().isEmpty())){
+			Edge tempLowestEdge = getLowestEdge(tempGraph);
+			IVertex start = (IVertex) tempLowestEdge.getSource();
+			IVertex end = (IVertex) tempLowestEdge.getTarget();
+			SCC.addEdge(start, end, tempLowestEdge);
+			Set<IVertex> vertexSet = SCC.getGraph().vertexSet(); 
+			if(!(hasCircle(SCC,start,end))){
+					if(!(vertexSet.contains(end))){
+						SCC.addVertex(end);
+					}
+					if(!(vertexSet.contains(end))){
+						SCC.addVertex(start);
+					}
+					SCC.addEdge(end, start, tempLowestEdge);
 			}
-		WeightedEdge smallestEdge = getLowestEdge(actualSet);
-		
-		
-		//SCC.addEdge(vertexSource, vertexTarget, edge);
-		
-		return null;
+			tempGraph.getGraph().removeEdge(tempLowestEdge);
+		}
 		
 	}
 	
-	public WeightedEdge getLowestEdge(Set<WeightedEdge> edgeSet3){
-		WeightedEdge tempEdge = null;
-		for(WeightedEdge edgetroll: edgeSet3){
-			if (tempEdge.getWeight() > edgetroll.getWeight()){
-				tempEdge = edgetroll;
+	public double weightSum(){
+		double WeightSum = 0;
+		for(Edge edge : SCC.getGraph().edgeSet()){
+		
+			WeightedEdge weightedEdge = (WeightedEdge) edge;
+			WeightSum = WeightSum + weightedEdge.getWeight();
+		}
+		return WeightSum;
+	}
+	
+	public IGraph returnGraph(){
+		return this.SCC;
+	}
+	
+	public Edge getLowestEdge(IGraph Graph){
+		double smalestWeight = 0;
+		Edge smalestEdge = null;
+		
+		for(Edge edge : Graph.getGraph().edgeSet()){
+			WeightedEdge weightedEdge = (WeightedEdge) edge;
+			if(weightedEdge.getWeight() < smalestWeight){
+				smalestWeight = weightedEdge.getWeight();
+				smalestEdge = weightedEdge;
 			}
 		}
-		return tempEdge;
+		
+		
+		return smalestEdge;
 	}
 	
 	public boolean reachable(IVertex start, IVertex end,IGraph graph){
@@ -74,20 +103,12 @@ public class Kruskal {
 		return false;
 	}
 	
-	public boolean hasCircle(IGraph graph){
-		
-		Set<IVertex> tempVertexSet = graph.getGraph().vertexSet();
-		//ein Graph enthält einen Kreis falls es ein Knotentupel (IVertex1, IVertex2) gibt für das gilt:
-		// IVertex 2 ist von IVertex 1 aus erreichbahr und IVertex 1 ist von IVertex 2 aus erreichbahr
-		for(IVertex vertex: tempVertexSet){	
-			Set<IVertex> tempVertexSet2 = tempVertexSet;
-			tempVertexSet2.remove(vertex);
-			for(IVertex vertex2: tempVertexSet2){
-				if((reachable(vertex,vertex2,graph) && reachable(vertex2,vertex,graph))){
-					return true;
-				}
-			}
+	public boolean hasCircle(IGraph graph, IVertex start, IVertex end){
+		Set<IVertex> vertexSet = graph.getGraph().vertexSet();
+		if(vertexSet.contains(start) && vertexSet.contains(end)){
+			return true;
 		}
+		
 		return false;
 	}
 	
