@@ -18,10 +18,12 @@ import org.jgrapht.graph.GraphPathImpl;
 
 
 
+
 import elements.IGraph;
 import elements.IVertex;
 import elements.Vertex;
 import elements.WeightedEdge;
+import graphs.UndirectedWeightedGraph;
 
 public class Kruskal {
 
@@ -36,6 +38,7 @@ public class Kruskal {
 	
 	public Kruskal(IGraph completeGraph) {
 		CompleteGraph = completeGraph;
+		SCC = UndirectedWeightedGraph.createNewGraph();
 		this.EdgeSet = completeGraph.getAllEdges();
 	}
 

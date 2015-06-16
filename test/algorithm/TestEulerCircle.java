@@ -71,8 +71,8 @@ public class TestEulerCircle {
 		
 		hierh.compute(graph1);
 		flury.compute(graph1);
-		
-		
+
+		assertEquals(hierh.getResultPath(), flury.getResultPath());
 	}
 
 }
