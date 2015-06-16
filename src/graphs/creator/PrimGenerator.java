@@ -59,30 +59,31 @@ public class PrimGenerator {
         if (numVertexes < 2) return null;
         IGraph graph = UndirectedWeightedGraph.createNewGraph();
 
-        IVertex[] vertexes = new Vertex[numVertexes];
         List<IVertex> vertexList1 = new ArrayList<>();
 
         for(int i=0;i<numVertexes;i++){
             IVertex vertex = new Vertex(String.valueOf(createLetter()));
             if(i>0){
                 IVertex source = vertexList1.get(i-1);
-                IVertex target = vertex;
-                vertexList1.add(target);
-                if(source.equals(target) || graph.getGraph().containsEdge(source,target) || vertexList1.contains(target)){
+                if(source.equals(vertex) || graph.getGraph().containsEdge(source,vertex) || vertexList1.contains(vertex)){
                     i--;
                     continue;
                 }
+                vertexList1.add(vertex);
                 double weight = createRandomInt(0,300);
-                Edge edge = new WeightedEdge(source,target,weight);
+                Edge edge = new WeightedEdge(source,vertex,weight);
                 graph.addVertex(source);
-                graph.addVertex(target);
-                graph.addEdge(source, target, edge);
+                graph.addVertex(vertex);
+                graph.addEdge(source, vertex, edge);
             } else {
                 vertexList1.add(vertex);
                 graph.addVertex(vertex);
             }
 
 
+        }
+        if(numVertexes!=graph.getGraph().vertexSet().size()){
+            System.out.println(false);
         }
 
         double maxEdges = (Math.pow(numVertexes,2) - numVertexes) / 2;
@@ -107,12 +108,5 @@ public class PrimGenerator {
             }
         }
         return graph;
-    }
-
-    public static void main(String[] args) {
-
-        while(true){
-            PrimGenerator.createPrimGraphWithoutLoop(6);
-        }
     }
 }
