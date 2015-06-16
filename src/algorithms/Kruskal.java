@@ -28,7 +28,7 @@ public class Kruskal {
 
 	private IGraph CompleteGraph;
 	private IGraph SCC;
-//	private Set<Edge> EdgeSet = new HashSet<Edge>();
+	private Set<Edge> EdgeSet = new HashSet<Edge>();
 	
 	
 	
@@ -36,10 +36,11 @@ public class Kruskal {
 	
 	public Kruskal(IGraph completeGraph) {
 		CompleteGraph = completeGraph;
-		//this.EdgeSet = completeGraph.getAllEdges();
+		this.EdgeSet = completeGraph.getAllEdges();
 	}
 
 	public void compute(){
+		
 		IGraph tempGraph = CompleteGraph;
 		while(!(tempGraph.getAllEdges().isEmpty())){
 			Edge tempLowestEdge = getLowestEdge(tempGraph);
@@ -75,7 +76,7 @@ public class Kruskal {
 	}
 	
 	public Edge getLowestEdge(IGraph Graph){
-		double smalestWeight = 0;
+		double smalestWeight = Double.POSITIVE_INFINITY;
 		Edge smalestEdge = null;
 		
 		for(Edge edge : Graph.getGraph().edgeSet()){
