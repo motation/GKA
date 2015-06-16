@@ -14,6 +14,7 @@ import elements.WeightedEdge;
 
 public class TestEulerCircle {
 	IGraph graph1 = null;
+	IGraph graph2 = null;
 	Hierholzer hierh = new Hierholzer();
 	Fleury flury = new Fleury();
 	//IGraph
@@ -83,44 +84,20 @@ public class TestEulerCircle {
 
 		
 		Edge e1 = new WeightedEdge(v1,v2,0.0);
-		Edge e2 = new WeightedEdge(v2,v3,0.0);
-		Edge e3 = new WeightedEdge(v3,v4,0.0);
+		Edge e2 = new WeightedEdge(v1,v3,0.0);
+		Edge e3 = new WeightedEdge(v1,v4,0.0);
 		
-		
-		Edge e6 = new WeightedEdge(v1,v3,0.0);
-		Edge e7 = new WeightedEdge(v1,v4,0.0);
-		
-		Edge e8 = new WeightedEdge(v2,v4,0.0);
-		Edge e9 = new WeightedEdge(v2,v5,0.0);
-		
-		Edge e10 = new WeightedEdge(v3,v1,0.0);
-		Edge e11 = new WeightedEdge(v3,v5,0.0);
-		
-		Edge e12 = new WeightedEdge(v4,v1,0.0);
-		Edge e13 = new WeightedEdge(v4,v2,0.0);
-		
-		Edge e14 = new WeightedEdge(v5,v3,0.0);
-		Edge e15 = new WeightedEdge(v5,v2,0.0);
-		
-		graph1.addEdge(v1, v2, e1);
-		graph1.addEdge(v2, v3, e2);
-		graph1.addEdge(v3, v4, e3);
-		graph1.addEdge(v4, v5, e4);
-		graph1.addEdge(v5, v1, e5);
-		
-		graph1.addEdge(v1, v3, e6);
 
 		
-		graph1.addEdge(v2, v4, e7);
+		graph2.addEdge(v1, v2, e1);
+		graph2.addEdge(v1, v3, e1);
+		graph2.addEdge(v1, v4, e1);
 
 		
-		graph1.addEdge(v3, v1, e8);
+		assertFalse(hierh.compute(graph1));
+		assertFalse(flury.compute(graph1));
 
 		
-		graph1.addEdge(v4, v1, e9);
-
-		
-		graph1.addEdge(v5, v3, e10);
 
 	}
 

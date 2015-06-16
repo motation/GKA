@@ -6,7 +6,8 @@ import elements.IGraph;
 
 public class Fleury {
 
-	public void compute(IGraph graph1) {
+	public boolean compute(IGraph graph1) {
+		return false;
 		// TODO Auto-generated method stub
 		
 	}
