@@ -6,9 +6,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.LinkedTransferQueue;
 
 import org.jgraph.graph.Edge;
+import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.GraphPathImpl;
@@ -18,6 +22,8 @@ import org.jgrapht.graph.GraphPathImpl;
 
 
 
+
+import org.jgrapht.traverse.BreadthFirstIterator;
 
 import elements.IGraph;
 import elements.IVertex;
@@ -95,14 +101,27 @@ public class Kruskal {
 	}
 	
 	public boolean reachable(IVertex start, IVertex end,IGraph graph){
-
-		Set<Edge> tempEdgeSet = graph.getGraph().edgesOf(start);
-		for(Edge edge: tempEdgeSet){
-			if( edge.getTarget() == end){
-				return true;
+			// Set<Edge> edgeSet = graph.edgesFrom(start);
+			Set<IVertex> vertSet = new HashSet<>();
+			Queue<IVertex> vertQueue = new PriorityQueue<>();
+			while(!vertQueue.isEmpty()){
+				IVertex currVert = vertQueue.poll();
+				
+				Set<Edge> edgeSet = graph.edgesFrom(currVert);
+				for(Edge currEdge : edgeSet){
+					IVertex v1 = graph.getGraph().getEdgeTarget(currEdge);
+					IVertex v2 = graph.getGraph().getEdgeSource(currEdge);
+					if (v1.equals(end) || v2.equals(end)) return true;
+					
+					if (vertSet.add(v1)){
+						vertQueue.add(v1);
+					}
+					
+					if (vertSet.add(v2)){
+						vertQueue.add(v2);
+					}
+				}
 			}
-			reachable((IVertex) edge.getTarget(),end,graph);
-		}
 		return false;
 	}
 	

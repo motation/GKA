@@ -104,6 +104,8 @@ public class TestEulerCircle {
 		
 	}
 	
+	
+	
 	@Test
 	public void testPositiv() throws IOException {
 		init();
@@ -111,6 +113,7 @@ public class TestEulerCircle {
 		hierh.compute(graph1_static);
 		flury.compute(graph1_static);
 
+		
 		assertEquals(hierh.getResultPath(), flury.getResultPath());
 	}
 	@Test
@@ -123,6 +126,30 @@ public class TestEulerCircle {
 
 		
 
+	}
+	@Test
+	public void TestFiles(){
+		hierh.compute(graph1);
+		flury.compute(graph1);
+		assertEquals(hierh.getResultPath(), flury.getResultPath());
+		
+		
+		hierh.compute(graph2);
+		flury.compute(graph2);
+		assertEquals(hierh.getResultPath(), flury.getResultPath());
+		
+		hierh.compute(graph3);
+		flury.compute(graph3);
+		assertEquals(hierh.getResultPath(), flury.getResultPath());
+		
+		hierh.compute(graph4);
+		flury.compute(graph4);
+		assertEquals(hierh.getResultPath(), flury.getResultPath());
+		
+		hierh.compute(graph5);
+		flury.compute(graph5);
+		assertEquals(hierh.getResultPath(), flury.getResultPath());
+		
 	}
 
 }
