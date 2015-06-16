@@ -6,7 +6,9 @@ import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
 import org.jgraph.graph.Edge;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,6 +24,18 @@ public class PrimFibo {
 
     public PrimFibo(IGraph graph) {
         this.graph = graph;
+        List<Edge> edgeList = new ArrayList<>();
+        for(Edge edge : graph.getGraph().edgeSet()){
+            IVertex source = (IVertex) edge.getSource();
+            IVertex target = (IVertex) edge.getTarget();
+            WeightedEdge weightedEdge = (WeightedEdge) edge;
+            Edge doubleEdge = new WeightedEdge(target,source,weightedEdge.getWeight());
+            edgeList.add(doubleEdge);
+        }
+        for(Edge edge : edgeList){
+            WeightedEdge weightedEdge = (WeightedEdge) edge;
+            graph.getGraph().addEdge((IVertex) edge.getSource(), (IVertex) edge.getTarget(), weightedEdge);
+        }
     }
 
     public IVertex minCostEndpoint(IVertex vertex) {
@@ -32,11 +46,10 @@ public class PrimFibo {
             WeightedEdge weightedEdge = (WeightedEdge) edge;
             double weight = weightedEdge.getWeight();
 
-            IVertex exploreVertexSource = (IVertex) edge.getSource();
             IVertex exploreVertexTarget = (IVertex) edge.getSource();
 
 
-            if (!resultGraph.getGraph().containsVertex(exploreVertexSource) || !resultGraph.getGraph().containsVertex(exploreVertexTarget)) {
+            if (!resultGraph.getGraph().containsVertex(exploreVertexTarget)) {
                 continue;
             }
             if (weight >= leastCost) {
@@ -44,7 +57,7 @@ public class PrimFibo {
             }
 
 
-            vertexToAdd = resultGraph.getGraph().containsVertex(exploreVertexTarget) ? exploreVertexTarget : exploreVertexSource;
+            vertexToAdd = exploreVertexTarget;
             leastCost = weight;
         }
         return vertexToAdd;
