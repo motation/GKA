@@ -39,6 +39,9 @@ public class TestPrim {
 	
 	@Test
 	public void positivTests(){
-        
+        Prim prim = new Prim(graph1);
+        prim.init();
+        prim.loop();
+        Assert.assertEquals(389.0,prim.getEdgeSum(),0.1);
     }
 }
