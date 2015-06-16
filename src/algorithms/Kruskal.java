@@ -108,7 +108,8 @@ public class Kruskal {
 	public boolean hasCircle(IGraph graph, IVertex start, IVertex end){
 		Set<IVertex> vertexSet = graph.getGraph().vertexSet();
 		if(vertexSet.contains(start) && vertexSet.contains(end)){
-			return true;
+			if(reachable(start,end,graph))
+				return true;
 		}
 		
 		return false;
