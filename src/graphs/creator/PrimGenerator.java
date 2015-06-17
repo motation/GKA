@@ -20,7 +20,7 @@ public class PrimGenerator {
         return (char) createRandomInt(65, 90);
     }
 
-    private static int createRandomInt(int low, int high) {
+    public static int createRandomInt(int low, int high) {
         Random r = new Random();
         int result = r.nextInt(high - low + 1) + low;
         return result;
