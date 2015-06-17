@@ -1,143 +1,79 @@
 package algorithms;
 
-
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Set;
-import java.util.concurrent.LinkedTransferQueue;
 
-import org.jgraph.graph.Edge;
-import org.jgrapht.Graph;
-import org.jgrapht.GraphPath;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.GraphPathImpl;
+import org.jgrapht.*;
+import org.jgrapht.alg.interfaces.*;
+import org.jgrapht.alg.util.*;
+
+//update
+
+public class Kruskal<V, E>
+    implements MinimumSpanningTree<V, E>
+{
+    
+
+    private double spanningTreeCost;
+    private Set<E> edgeList;
+
+    
+
+    
+    public Kruskal(final Graph<V, E> graph)
+    {
+        UnionFind<V> forest = new UnionFind<V>(graph.vertexSet());
+        ArrayList<E> allEdges = new ArrayList<E>(graph.edgeSet());
+        Collections.sort(
+            allEdges,
+            new Comparator<E>() {
+                public int compare(E edge1, E edge2)
+                {
+                    return Double.valueOf(graph.getEdgeWeight(edge1)).compareTo(
+                        graph.getEdgeWeight(edge2));
+                }
+            });
+
+        spanningTreeCost = 0;
+        edgeList = new HashSet<E>();
+
+        for (E edge : allEdges) {
+            V source = graph.getEdgeSource(edge);
+            V target = graph.getEdgeTarget(edge);
+            if (forest.find(source).equals(forest.find(target))) {
+                continue;
+            }
+
+            forest.union(source, target);
+            edgeList.add(edge);
+            spanningTreeCost += graph.getEdgeWeight(edge);
+        }
+    }
+
+    
+
+    @Override public Set<E> getMinimumSpanningTreeEdgeSet()
+    {
+        return edgeList;
+    }
+
+    @Override public double getMinimumSpanningTreeTotalWeight()
+    {
+        return spanningTreeCost;
+    }
 
 
+    @Deprecated public Set<E> getEdgeSet()
+    {
+        return getMinimumSpanningTreeEdgeSet();
+    }
 
 
-
-
-
-import org.jgrapht.traverse.BreadthFirstIterator;
-
-import elements.IGraph;
-import elements.IVertex;
-import elements.Vertex;
-import elements.WeightedEdge;
-import graphs.UndirectedWeightedGraph;
-
-public class Kruskal {
-
-
-	private IGraph CompleteGraph;
-	private IGraph SCC;
-	private Set<Edge> EdgeSet = new HashSet<Edge>();
-	public Kruskal(IGraph completeGraph) {
-		CompleteGraph = completeGraph;
-		SCC = UndirectedWeightedGraph.createNewGraph();
-		this.EdgeSet = completeGraph.getAllEdges();
-	}
-
-	public void compute(){
-		
-		IGraph tempGraph = CompleteGraph;
-		
-		Edge tempLowestEdge = getLowestEdge(tempGraph);
-		
-		
-		
-//		IGraph tempGraph = CompleteGraph;
-//		while(!(tempGraph.getAllEdges().isEmpty())){
-//			
-//			Edge tempLowestEdge = getLowestEdge(tempGraph);
-//			
-//			IVertex start = (IVertex) tempLowestEdge.getSource();
-//			IVertex end = (IVertex) tempLowestEdge.getTarget();
-//			
-//			//SCC.addEdge(start, end, tempLowestEdge);
-//			Set<IVertex> vertexSet = SCC.getGraph().vertexSet(); 
-//			if(!(hasCircle(SCC,start,end))){
-//					if(!(vertexSet.contains(end))){
-//						SCC.addVertex(end);
-//					}
-//					if(!(vertexSet.contains(start))){
-//						SCC.addVertex(start);
-//					}
-//					SCC.addEdge(end, start, tempLowestEdge);
-//			}
-//			tempGraph.getGraph().removeEdge(tempLowestEdge);
-		//}
-	}
-	
-	public double weightSum(){
-		double WeightSum = 0;
-		for(Edge edge : SCC.getGraph().edgeSet()){
-		
-			WeightedEdge weightedEdge = (WeightedEdge) edge;
-			WeightSum = WeightSum + weightedEdge.getWeight();
-		}
-		return WeightSum;
-	}
-	
-	public IGraph returnGraph(){
-		return this.SCC;
-	}
-	
-	public Edge getLowestEdge(IGraph Graph){
-		double smalestWeight = Double.POSITIVE_INFINITY;
-		Edge smalestEdge = null;
-		
-		for(Edge edge : Graph.getGraph().edgeSet()){
-			WeightedEdge weightedEdge = (WeightedEdge) edge;
-			if(weightedEdge.getWeight() < smalestWeight){
-				smalestWeight = weightedEdge.getWeight();
-				smalestEdge = weightedEdge;
-			}
-		}
-		
-		
-		return smalestEdge;
-	}
-	
-	public boolean reachable(IVertex start, IVertex end,IGraph graph){
-			// Set<Edge> edgeSet = graph.edgesFrom(start);
-			Set<IVertex> vertSet = new HashSet<>();
-			Queue<IVertex> vertQueue = new PriorityQueue<>();
-			while(!vertQueue.isEmpty()){
-				IVertex currVert = vertQueue.poll();
-				
-				Set<Edge> edgeSet = graph.edgesFrom(currVert);
-				for(Edge currEdge : edgeSet){
-					IVertex v1 = graph.getGraph().getEdgeTarget(currEdge);
-					IVertex v2 = graph.getGraph().getEdgeSource(currEdge);
-					if (v1.equals(end) || v2.equals(end)) return true;
-					
-					if (vertSet.add(v1)){
-						vertQueue.add(v1);
-					}
-					
-					if (vertSet.add(v2)){
-						vertQueue.add(v2);
-					}
-				}
-			}
-		return false;
-	}
-	
-	public boolean hasCircle(IGraph graph, IVertex start, IVertex end){
-		Set<IVertex> vertexSet = graph.getGraph().vertexSet();
-		if(vertexSet.contains(start) && vertexSet.contains(end)){
-			//if(reachable(start,end,graph)){
-			//	return true;
-			//}
-		}
-		
-		return false;
-	}
-	
+    @Deprecated public double getSpanningTreeCost()
+    {
+        return getMinimumSpanningTreeTotalWeight();
+    }
 }
+
+// End KruskalMinimumSpanningTree.java
