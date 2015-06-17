@@ -37,7 +37,7 @@ public class EulerGeneratorTest {
         this.eulerCircleTrue2 = EulerGenerator.generateEulerCircle();
         this.eulerCircleTrue3 = EulerGenerator.generateEulerCircle();
 
-        this.eulerCircleFalse1 = EulerGenerator.generateEulerCircle();
+        this.eulerCircleFalse1 = EulerGenerator.generateWrongEulerCircle();
         this.eulerCircleFalse2 = EulerGenerator.generateWrongEulerCircle();
         this.eulerCircleFalse3 = EulerGenerator.generateWrongEulerCircle();
 

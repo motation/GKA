@@ -16,7 +16,7 @@ import org.jgraph.graph.Edge;
 public class PrimGenerator {
 
 
-    private static char createLetter() {
+    public static char createLetter() {
         return (char) createRandomInt(65, 90);
     }
 
