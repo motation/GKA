@@ -23,6 +23,7 @@ public class EulerGenerator {
     }
 
     public static IGraph generateEulerCircle(int numVertexes){
+        if(numVertexes < 2) return null;
         IGraph graph = UndirectedWeightedGraph.createNewGraph();
         if(numVertexes % 2 == 0){
             // start with 4 vertexes
