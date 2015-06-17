@@ -9,14 +9,63 @@ import org.jgraph.graph.Edge;
 import org.jgrapht.alg.DijkstraShortestPath;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * Created by Ole on 17.06.2015.
  */
 public class EulerGenerator {
-    public static IGraph generateEulerCircle(){
+
+    private static String createTrippleLetter(){
+        return ""+PrimGenerator.createLetter()+PrimGenerator.createLetter()+PrimGenerator.createLetter();
+    }
+
+    public static IGraph generateEulerCircle(int numVertexes){
         IGraph graph = UndirectedWeightedGraph.createNewGraph();
+        if(numVertexes % 2 == 0){
+            // start with 4 vertexes
+            for(int i=0;i<4;i++){
+                IVertex vertex = new Vertex(createTrippleLetter());
+                if(graph.getGraph().containsVertex(vertex)){
+                    i--;
+                    continue;
+                }
+                graph.addVertex(vertex);
+            }
+            // adding edges to this vertexes
+            IVertex[] vertexes = graph.getGraph().vertexSet().toArray(new IVertex[graph.getGraph().vertexSet().size()]);
+            graph.addVertex(vertexes[0]);
+            graph.addVertex(vertexes[1]);
+            graph.addVertex(vertexes[2]);
+            graph.addVertex(vertexes[3]);
+
+            graph.addEdge(vertexes[0], vertexes[1], new WeightedEdge(vertexes[0], vertexes[1], PrimGenerator.createRandomInt(5, 200)));
+            graph.addEdge(vertexes[1], vertexes[2], new WeightedEdge(vertexes[1], vertexes[2], PrimGenerator.createRandomInt(5, 200)));
+            graph.addEdge(vertexes[2], vertexes[3], new WeightedEdge(vertexes[2], vertexes[3], PrimGenerator.createRandomInt(5, 200)));
+            graph.addEdge(vertexes[3],vertexes[0],new WeightedEdge(vertexes[3],vertexes[0],PrimGenerator.createRandomInt(5,200)));
+
+
+        } else {
+            // start with 3 vertexex
+            for(int i=0;i<3;i++){
+                IVertex vertex = new Vertex(createTrippleLetter());
+                if(graph.getGraph().containsVertex(vertex)){
+                    i--;
+                    continue;
+                }
+                graph.addVertex(vertex);
+            }
+            // adding edges to this vertexes
+            IVertex[] vertexes = graph.getGraph().vertexSet().toArray(new IVertex[graph.getGraph().vertexSet().size()]);
+            graph.addVertex(vertexes[0]);
+            graph.addVertex(vertexes[1]);
+            graph.addVertex(vertexes[2]);
+
+            graph.addEdge(vertexes[0],vertexes[1],new WeightedEdge(vertexes[0],vertexes[1],PrimGenerator.createRandomInt(5,200)));
+            graph.addEdge(vertexes[1],vertexes[2],new WeightedEdge(vertexes[1],vertexes[2],PrimGenerator.createRandomInt(5,200)));
+            graph.addEdge(vertexes[2],vertexes[0],new WeightedEdge(vertexes[2],vertexes[0],PrimGenerator.createRandomInt(5,200)));
+        }
         //OF TODO generate EulerCircle
         return graph;
     }
