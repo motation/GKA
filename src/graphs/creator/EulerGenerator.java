@@ -1,5 +1,6 @@
 package graphs.creator;
 
+import algorithms.Prim;
 import elements.IGraph;
 import elements.IVertex;
 import elements.Vertex;
@@ -66,7 +67,23 @@ public class EulerGenerator {
             graph.addEdge(vertexes[1],vertexes[2],new WeightedEdge(vertexes[1],vertexes[2],PrimGenerator.createRandomInt(5,200)));
             graph.addEdge(vertexes[2],vertexes[0],new WeightedEdge(vertexes[2],vertexes[0],PrimGenerator.createRandomInt(5,200)));
         }
-        //OF TODO generate EulerCircle
+        // choose one vertex and add two edges - but before create two new vertexes
+        // example create C; create D; A connect C ; A connect D; C connect D;
+        while(graph.getGraph().vertexSet().size() != numVertexes){
+            int size = graph.getGraph().vertexSet().size();
+            int randomNumber = PrimGenerator.createRandomInt(0, size - 1);
+            IVertex randomVertex = graph.getGraph().vertexSet().toArray(new IVertex[size])[randomNumber];
+            IVertex newVertexOne = new Vertex(createTrippleLetter());
+            IVertex newVertexTwo = new Vertex(createTrippleLetter());
+            graph.addVertex(newVertexOne);
+            graph.addVertex(newVertexTwo);
+            WeightedEdge edgeOne = new WeightedEdge(randomVertex,newVertexOne,PrimGenerator.createRandomInt(5,200));
+            WeightedEdge edgeTwo = new WeightedEdge(randomVertex,newVertexTwo,PrimGenerator.createRandomInt(5,200));
+            WeightedEdge edgeThree = new WeightedEdge(newVertexOne,newVertexTwo,PrimGenerator.createRandomInt(5,200));
+            graph.addEdge(randomVertex,newVertexOne,edgeOne);
+            graph.addEdge(randomVertex,newVertexTwo,edgeTwo);
+            graph.addEdge(newVertexOne,newVertexTwo,edgeThree);
+        }
         return graph;
     }
 

@@ -30,12 +30,11 @@ public class EulerGeneratorTest {
 
     @Before
     public void setUp() throws Exception {
-
         reader = new FileGraphReader();
 
         this.eulerCircleTrue1 = EulerGenerator.generateEulerCircle(PrimGenerator.createRandomInt(10,30));
         this.eulerCircleTrue2 = EulerGenerator.generateEulerCircle(PrimGenerator.createRandomInt(10,30));
-        this.eulerCircleTrue3 = EulerGenerator.generateEulerCircle(PrimGenerator.createRandomInt(10,30));
+        this.eulerCircleTrue3 = EulerGenerator.generateEulerCircle(23);
 
         this.eulerCircleFalse1 = EulerGenerator.generateWrongEulerCircle();
         this.eulerCircleFalse2 = EulerGenerator.generateWrongEulerCircle();
