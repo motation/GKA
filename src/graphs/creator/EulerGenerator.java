@@ -19,7 +19,7 @@ import java.util.List;
 public class EulerGenerator {
 
     private static String createTrippleLetter(){
-        return ""+PrimGenerator.createLetter()+PrimGenerator.createLetter()+PrimGenerator.createLetter();
+        return return String.valueOf(PrimGenerator.createLetter()) + String.valueOf(PrimGenerator.createLetter()) + String.valueOf(PrimGenerator.createLetter());
     }
 
     public static IGraph generateEulerCircle(int numVertexes){

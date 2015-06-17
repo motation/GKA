@@ -26,6 +26,10 @@ public class PrimGenerator {
         return result;
     }
 
+    private static String trippleLetter(){
+        return String.valueOf(createLetter()) + String.valueOf(createLetter()) + String.valueOf(createLetter());
+    }
+
     public static IGraph createPrimGraphWithoutLoop(int numVertexes) {
         if (numVertexes < 2) return null;
         IGraph graph = UndirectedWeightedGraph.createNewGraph();
@@ -33,7 +37,7 @@ public class PrimGenerator {
         List<IVertex> vertexList1 = new ArrayList<>();
 
         for(int i=0;i<numVertexes;i++){
-            IVertex vertex = new Vertex(String.valueOf(createLetter()+createLetter()+createLetter()));
+            IVertex vertex = new Vertex(trippleLetter());
             if(i>0){
                 IVertex source = vertexList1.get(i-1);
                 if(source.equals(vertex) || graph.getGraph().containsEdge(source,vertex) || vertexList1.contains(vertex)){
