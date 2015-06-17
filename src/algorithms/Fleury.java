@@ -3,14 +3,12 @@ package algorithms;
 import elements.IGraph;
 import elements.IVertex;
 import graphs.UndirectedWeightedGraph;
-import io.FileGraphReader;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.Edge;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.SimpleGraph;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,10 +22,10 @@ public class Fleury {
         IVertex current = start;
 
 
-        while(copy.getGraph().edgeSet().size() != 0){
-            for(Edge edge : copy.getGraph().edgesOf(current)){
-                if(!bridges.contains(edge) || copy.getGraph().edgesOf((IVertex) current).size()==1){
-                    current = (current.equals((IVertex)edge.getTarget()) ? (IVertex)edge.getSource() : (IVertex) edge.getTarget());
+        while (copy.getGraph().edgeSet().size() != 0) {
+            for (Edge edge : copy.getGraph().edgesOf(current)) {
+                if (!bridges.contains(edge) || copy.getGraph().edgesOf((IVertex) current).size() == 1) {
+                    current = (current.equals((IVertex) edge.getTarget()) ? (IVertex) edge.getSource() : (IVertex) edge.getTarget());
                     copy.getGraph().removeEdge(edge);
 //                    System.out.println("removed " + edge.getSource() + " " + edge.getTarget() + " " + edge);
                     break;
@@ -35,7 +33,9 @@ public class Fleury {
             }
             bridges = bridgeFinder(copy);
         }
-        if(copy.getGraph().edgeSet().size() == 0 && current.equals(start)) return true;
+        if (copy.getGraph().edgeSet().size() == 0 && current.equals(start)) {
+            return true;
+        }
         return false;
     }
 

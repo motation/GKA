@@ -68,7 +68,7 @@ public class EulerGenerator {
         }
         // choose one vertex and add two edges - but before create two new vertexes
         // example create C; create D; A connect C ; A connect D; C connect D;
-        while (graph.getGraph().vertexSet().size() != numVertexes) {
+        while (graph.getGraph().vertexSet().size() < numVertexes) {
             int size = graph.getGraph().vertexSet().size();
             int randomNumber = PrimGenerator.createRandomInt(0, size - 1);
             IVertex randomVertex = graph.getGraph().vertexSet().toArray(new IVertex[size])[randomNumber];
