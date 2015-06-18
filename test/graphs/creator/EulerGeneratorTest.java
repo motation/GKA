@@ -1,13 +1,12 @@
 package graphs.creator;
 
-import elements.IGraph;
 import io.FileGraphReader;
+
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import elements.IGraph;
 
 /**
  * Created by Ole on 17.06.2015.
