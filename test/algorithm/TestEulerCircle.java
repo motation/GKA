@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.jgraph.graph.Edge;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import algorithms.Fleury;
@@ -170,7 +171,7 @@ public class TestEulerCircle {
 		assertFalse(flury.compute(graph1_static));
 	}
 	@Test
-	
+	@Ignore
 	public void TestFiles(){
 		hierh.compute(graph1);
 		flury.compute(graph1);
