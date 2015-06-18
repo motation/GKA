@@ -1,12 +1,13 @@
 package algorithms;
 
 import java.util.*;
-import java.util.Collections;
-import java.util.Set;
 
+import org.jgraph.graph.Edge;
 import org.jgrapht.*;
 import org.jgrapht.alg.interfaces.*;
 import org.jgrapht.alg.util.*;
+
+import elements.IGraph;
 
 //update
 
@@ -21,36 +22,43 @@ public class Kruskal<V, E>
     
 
     
-    public Kruskal(final Graph<V, E> graph)
+    public Kruskal(final IGraph graph)
+    
+    
     {
-        UnionFind<V> forest = new UnionFind<V>(graph.vertexSet());
-        ArrayList<E> allEdges = new ArrayList<E>(graph.edgeSet());
+        UnionFind<V> forest = new UnionFind<V>((Set<V>) graph.getGraph().vertexSet()); // Unionfind, schöne darstellung von Kanten da unverbundenen Subsets
+        ArrayList<E> allEdges = new ArrayList<E>((Collection<? extends E>) graph.getGraph().edgeSet());
+        
         Collections.sort(
             allEdges,
             new Comparator<E>() {
                 public int compare(E edge1, E edge2)
                 {
-                    return Double.valueOf(graph.getEdgeWeight(edge1)).compareTo(
-                        graph.getEdgeWeight(edge2));
+                    return Double.valueOf(graph.getGraph().getEdgeWeight((Edge) edge1)).compareTo(
+                        ((IGraph) graph).getGraph().getEdgeWeight((Edge) edge2));
                 }
             });
 
         spanningTreeCost = 0;
         edgeList = new HashSet<E>();
 
-        for (E edge : allEdges) {
-            V source = graph.getEdgeSource(edge);
-            V target = graph.getEdgeTarget(edge);
-            if (forest.find(source).equals(forest.find(target))) {
-                continue;
-            }
+        
+        
 
-            forest.union(source, target);
-            edgeList.add(edge);
-            spanningTreeCost += graph.getEdgeWeight(edge);
+        for (E edge : allEdges) {
+            V source = (V) graph.getGraph().getEdgeSource((Edge) edge);
+            V target = (V) graph.getGraph().getEdgeTarget((Edge) edge);
+            if (!(forest.find(source).equals(forest.find(target)))) {
+                forest.union(source, target);
+                edgeList.add(edge);
+                spanningTreeCost += graph.getGraph().getEdgeWeight((Edge) edge);
+            	
+            }
         }
     }
 
+    
+    
     
 
     @Override public Set<E> getMinimumSpanningTreeEdgeSet()

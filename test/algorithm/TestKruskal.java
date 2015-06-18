@@ -3,20 +3,32 @@ package algorithm;
 import static org.junit.Assert.*;
 
 import org.jgraph.graph.Edge;
+import org.junit.Assert;
 import org.junit.Test;
 
 import algorithms.Kruskal;
+import algorithms.Prim;
+import algorithms.PrimFibo;
 import elements.IGraph;
 import elements.IVertex;
 import elements.Vertex;
 import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
+import graphs.creator.PrimGenerator;
+
+
 
 public class TestKruskal {
+	
+    private IGraph graph ;
+    private Prim prim;
+    private PrimFibo primFibo;
+
 
 	@Test
 	public void test() {
-		IGraph graph1_static = UndirectedWeightedGraph.createNewGraph();;
+		
+		IGraph graph1_static = UndirectedWeightedGraph.createNewGraph();
 		IVertex v1 = new Vertex("V1");
 		IVertex v2 = new Vertex("V2");
 		IVertex v3 = new Vertex("V3");
@@ -45,9 +57,28 @@ public class TestKruskal {
 		graph1_static.addEdge(v3, v5, e7);
 		
 		Kruskal krus = new Kruskal(graph1_static);
-		krus.compute();
 		
-		assertEquals(krus.weightSum(),13.0,0.001);
+		
+		assertEquals(krus.getMinimumSpanningTreeTotalWeight(),13.0,0.001);
 	}
+	
+	
+	 @Test
+	    public void primVsFiboTests(){
+		    
+
+		    
+	        for(int i=3;i<50;i++){
+	            graph = PrimGenerator.createPrimGraphWithoutLoop(i);
+	            prim = new Prim(graph);
+	            primFibo = new PrimFibo(graph);
+	            Kruskal krus1 = new Kruskal(graph);
+	            prim.init();
+	            prim.loop();
+	            primFibo.minimumSpanningTree();
+
+	            Assert.assertEquals(krus1.getMinimumSpanningTreeTotalWeight(),primFibo.getSum(),0.1);
+	        }
+	    }
 
 }

@@ -16,6 +16,7 @@ import elements.IVertex;
 import elements.Vertex;
 import elements.WeightedEdge;
 import graphs.UndirectedWeightedGraph;
+import graphs.creator.EulerGenerator;
 
 public class TestEulerCircle {
 	IGraph graph1_static = UndirectedWeightedGraph.createNewGraph();
@@ -30,6 +31,7 @@ public class TestEulerCircle {
 	Hierholzer hierh = new Hierholzer();
 	Fleury flury = new Fleury();
 	//IGraph
+	
 	public void init() throws IOException{
 		IVertex v1 = new Vertex("V1");
 		IVertex v2 = new Vertex("V2");
@@ -89,33 +91,76 @@ public class TestEulerCircle {
 		graph2_static.addEdge(v11, v41, e111);
 		
 		
-		File file1=new File("Z:\\win7\\GKA\\weighted1.graph");
-		File file2=new File("Z:\\win7\\GKA\\weighted2.graph");
-		File file3=new File("Z:\\win7\\GKA\\weighted3.graph");
-		File file4=new File("Z:\\win7\\GKA\\weighted4.graph");
-		File file5=new File("Z:\\win7\\GKA\\weighted5.graph");
-		
-		FileGraphReader reader = new FileGraphReader();
-		graph1 = reader.loadGraph(file1);
-		graph2 = reader.loadGraph(file2);
-		graph3 = reader.loadGraph(file3);
-		graph4 = reader.loadGraph(file4);
-		graph5 = reader.loadGraph(file5);
+//		File file1=new File("Z:\\win7\\GKA\\weighted1.graph");
+//		File file2=new File("Z:\\win7\\GKA\\weighted2.graph");
+//		File file3=new File("Z:\\win7\\GKA\\weighted3.graph");
+//		File file4=new File("Z:\\win7\\GKA\\weighted4.graph");
+//		File file5=new File("Z:\\win7\\GKA\\weighted5.graph");
+//		
+//		FileGraphReader reader = new FileGraphReader();
+//		graph1 = reader.loadGraph(file1);
+//		graph2 = reader.loadGraph(file2);
+//		graph3 = reader.loadGraph(file3);
+//		graph4 = reader.loadGraph(file4);
+//		graph5 = reader.loadGraph(file5);
 		
 	}
 	
 	
+	@Test
+	public void testEulerCircle(){
+		IGraph Tempgraph = UndirectedWeightedGraph.createNewGraph();
+		IVertex v1 = new Vertex("V1");
+		IVertex v2 = new Vertex("V2");
+		IVertex v3 = new Vertex("V3");
+		IVertex v4 = new Vertex("V4");
+		Tempgraph.addVertex(v1);
+		Tempgraph.addVertex(v2);
+		Tempgraph.addVertex(v3);
+		Tempgraph.addVertex(v4);
+		Edge e1 = new WeightedEdge(v1,v2,0.0);
+		Edge e2 = new WeightedEdge(v2,v3,0.0);
+		Edge e3 = new WeightedEdge(v3,v4,0.0);
+		Edge e4 = new WeightedEdge(v4,v1,0.0);
+		Tempgraph.addEdge(v1, v2, e1);
+		Tempgraph.addEdge(v2, v3, e2);
+		Tempgraph.addEdge(v3, v4, e3);
+		Tempgraph.addEdge(v4, v1, e4);
+		
+		Hierholzer hierh = new Hierholzer();
+		hierh.getEulertour(v1, Tempgraph);
+		
+		assertEquals(hierh.getEulertour(v1, Tempgraph), true);
+		
+	}
+	
+	@Test
+	public void TestlegitGraph() throws IOException {
+		init();
+		
+		 for(int i=3;i<50;i++){
+			 
+			 
+			 IGraph tempGraph = EulerGenerator.generateEulerCircle(i);
+			 assertEquals(hierh.legitGraph(tempGraph), true);
+		
+		
+		 }
+	}
 	
 	@Test
 	public void testPositiv() throws IOException {
 		init();
 		//#Hail_satan;#down_there:#hot_in_here
+		
+		
 		hierh.compute(graph1_static);
 		flury.compute(graph1_static);
 
 		
 		assertEquals(hierh.getResultPath(), flury.getResultPath());
 	}
+	
 	@Test
 	public void testNegativ() throws IOException{
 
@@ -123,11 +168,9 @@ public class TestEulerCircle {
 		init();
 		assertFalse(hierh.compute(graph1_static));
 		assertFalse(flury.compute(graph1_static));
-
-		
-
 	}
 	@Test
+	
 	public void TestFiles(){
 		hierh.compute(graph1);
 		flury.compute(graph1);
